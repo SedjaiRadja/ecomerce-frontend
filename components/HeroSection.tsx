@@ -81,7 +81,7 @@ const HeroSection = () => {
         {/* CTA */}
         <div className="absolute bottom-6 left-6 sm:bottom-8 sm:left-10 lg:bottom-10 lg:left-16">
           <Link
-            href="/products"
+            href="/#collection"
             className="inline-block bg-black px-8 py-4 font-jost text-sm uppercase tracking-[0.2em] text-white transition hover:bg-black/80"
           >
             Découvrir la collection
