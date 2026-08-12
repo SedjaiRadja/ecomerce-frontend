@@ -24,7 +24,7 @@ const categories = [
 
 export default function Categories() {
   return (
-    <section className="w-full bg-[#0a0a0a] px-3 py-12 sm:px-6 sm:py-16">
+    <section className="w-full bg-[#111111] px-3 py-12 sm:px-6 sm:py-16">
       <div className="mx-auto max-w-7xl">
         {/* Header */}
         <div className="mb-7 flex items-end justify-between sm:mb-10">
