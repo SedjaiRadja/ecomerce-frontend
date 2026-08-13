@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Heart, ShoppingBag, ArrowUpRight } from "lucide-react";
 
 type Product = {
+  id: string;
   name: string;
   description: string;
   price: number;
@@ -25,8 +26,8 @@ export default function ProductCard({
   return (
     <div className="group">
       {/* Image */}
-      <div className="relative aspect-[3/4] overflow-hidden bg-[#BDBAB5]">
-        <Link href="/products" className="absolute inset-0">
+      <Link href={`/products/${product.id}`}>
+        <div className="relative aspect-[3/4] overflow-hidden bg-[#BDBAB5]">
           <Image
             src={product.image}
             alt={product.name}
@@ -34,81 +35,20 @@ export default function ProductCard({
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 25vw"
             className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
           />
-        </Link>
 
-        {/* New Badge */}
-        {isNew && (
-          <div className="absolute left-2 top-2 z-10 sm:left-4 sm:top-4">
-            <span className="bg-[#C8C5C0]/90 px-2 py-1 font-jost text-[7px] uppercase tracking-[0.18em] text-black backdrop-blur-sm sm:px-3 sm:py-1.5 sm:text-[9px]">
-              Nouveau
-            </span>
+          {isNew && (
+            <div className="absolute left-2 top-2 z-10 sm:left-4 sm:top-4">
+              <span className="bg-[#C8C5C0]/90 px-2 py-1 font-jost text-[7px] uppercase tracking-[0.18em] text-black backdrop-blur-sm sm:px-3 sm:py-1.5 sm:text-[9px]">
+                Nouveau
+              </span>
+            </div>
+          )}
+
+          <div className="absolute bottom-3 right-3 hidden h-8 w-8 items-center justify-center rounded-full bg-[#C8C5C0]/90 opacity-0 backdrop-blur-sm transition-all duration-300 group-hover:opacity-100 sm:flex">
+            <ArrowUpRight className="h-4 w-4" strokeWidth={1.2} />
           </div>
-        )}
-
-        {/* Wishlist */}
-        <button
-          type="button"
-          aria-label={`Ajouter ${product.name} aux favoris`}
-          className="
-            absolute
-            right-2
-            top-2
-            z-10
-            flex
-            h-8
-            w-8
-            items-center
-            justify-center
-            rounded-full
-            bg-[#C8C5C0]/90
-            text-black
-            backdrop-blur-sm
-            transition-all
-            duration-300
-            hover:bg-black
-            hover:text-white
-            sm:right-4
-            sm:top-4
-            sm:h-9
-            sm:w-9
-          "
-        >
-          <Heart
-            className="h-4 w-4"
-            strokeWidth={1.2}
-          />
-        </button>
-
-        {/* Arrow */}
-        <Link
-          href="/products"
-          aria-label={`Voir ${product.name}`}
-          className="
-            absolute
-            bottom-3
-            right-3
-            hidden
-            h-8
-            w-8
-            items-center
-            justify-center
-            rounded-full
-            bg-[#C8C5C0]/90
-            text-black
-            opacity-0
-            backdrop-blur-sm
-            transition-all
-            duration-300
-            group-hover:opacity-100
-            sm:flex
-          "
-        >
-          <ArrowUpRight
-            className="h-4 w-4"
-            strokeWidth={1.2}
-          />
-        </Link>
-      </div>
+        </div>
+      </Link>
 
       {/* Product Info */}
       <div className="flex min-h-[175px] flex-col pt-4 sm:min-h-[185px]">
@@ -166,11 +106,7 @@ export default function ProductCard({
             sm:text-[9px]
           "
         >
-          <ShoppingBag
-            className="h-3.5 w-3.5"
-            strokeWidth={1.3}
-          />
-
+          <ShoppingBag className="h-3.5 w-3.5" strokeWidth={1.3} />
           Ajouter au panier
         </button>
       </div>
