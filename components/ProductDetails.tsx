@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 
 type Product = {
+  id: string;
   name: string;
   description: string;
   price: number;
@@ -28,6 +29,9 @@ type ProductDetailsProps = {
 export default function ProductDetails({ product }: ProductDetailsProps) {
   const [quantity, setQuantity] = useState(1);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [isAddingToCart, setIsAddingToCart] = useState(false);
+  const [cartMessage, setCartMessage] = useState("");
+  const [cartError, setCartError] = useState("");
   const images = [product.image, product.image, product.image, product.image];
 
   const [selectedImage, setSelectedImage] = useState(product.image);
@@ -43,7 +47,46 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
       setQuantity((prev) => prev - 1);
     }
   };
+  const addToCart = async () => {
+    if (product.stock <= 0) return;
 
+    setIsAddingToCart(true);
+    setCartMessage("");
+    setCartError("");
+
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/cart`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({
+            productId: product.id,
+            quantity,
+          }),
+        },
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          data.message || data || "Impossible d'ajouter au panier",
+        );
+      }
+
+      setCartMessage("Produit ajouté au panier");
+    } catch (error) {
+      setCartError(
+        error instanceof Error ? error.message : "Une erreur est survenue",
+      );
+    } finally {
+      setIsAddingToCart(false);
+    }
+  };
   return (
     <main className="min-h-screen bg-[#F5F3F0] px-4 py-8 sm:px-6 lg:px-10">
       <div className="mx-auto max-w-7xl">
@@ -194,34 +237,36 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
               {/* Add to cart */}
               <button
                 type="button"
-                disabled={product.stock === 0}
+                onClick={addToCart}
+                disabled={product.stock === 0 || isAddingToCart}
                 className="
-                  group
-                  flex
-                  min-h-12
-                  flex-1
-                  items-center
-                  justify-center
-                  gap-3
-                  border
-                  border-black
-                  bg-black
-                  px-5
-                  font-jost
-                  text-[9px]
-                  uppercase
-                  tracking-[0.2em]
-                  text-white
-                  transition-all
-                  duration-300
-                  hover:bg-transparent
-                  hover:text-black
-                  disabled:cursor-not-allowed
-                  disabled:opacity-40
-                "
+    group
+    flex
+    min-h-12
+    flex-1
+    items-center
+    justify-center
+    gap-3
+    border
+    border-black
+    bg-black
+    px-5
+    font-jost
+    text-[9px]
+    uppercase
+    tracking-[0.2em]
+    text-white
+    transition-all
+    duration-300
+    hover:bg-transparent
+    hover:text-black
+    disabled:cursor-not-allowed
+    disabled:opacity-40
+  "
               >
                 <ShoppingBag className="h-4 w-4" strokeWidth={1.2} />
-                Ajouter au panier
+
+                {isAddingToCart ? "Ajout..." : "Ajouter au panier"}
               </button>
 
               {/* Wishlist */}

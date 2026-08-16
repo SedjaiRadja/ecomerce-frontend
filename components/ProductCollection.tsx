@@ -63,7 +63,9 @@ export default function ProductCollection() {
 
     // Category
     if (category !== "Toutes") {
-      result = result.filter((product) => product.category === category);
+      result = result.filter(
+        (product) => product.category === category
+      );
     }
 
     // Availability
@@ -82,7 +84,8 @@ export default function ProductCollection() {
 
     if (priceRange === "10000-15000") {
       result = result.filter(
-        (product) => product.price >= 10000 && product.price <= 15000,
+        (product) =>
+          product.price >= 10000 && product.price <= 15000
       );
     }
 
@@ -100,7 +103,9 @@ export default function ProductCollection() {
     }
 
     if (sortBy === "name-asc") {
-      result.sort((a, b) => a.name.localeCompare(b.name, "fr"));
+      result.sort((a, b) =>
+        a.name.localeCompare(b.name, "fr")
+      );
     }
 
     return result;
@@ -114,11 +119,12 @@ export default function ProductCollection() {
   };
 
   return (
-    <section className="bg-[#F7F5F2] px-5 py-16 sm:px-8 lg:px-12">
-      <div className="mx-auto max-w-[1400px]">
-        {/* Header */}
-        <header className="max-w-2xl">
-          <p className="font-jost text-[9px] uppercase tracking-[0.3em] text-black/40">
+    <section className="min-h-screen bg-[#F5F3F0] px-4 py-12 sm:px-6 lg:px-10 lg:py-16">
+      <div className="mx-auto max-w-7xl">
+
+        {/* ================= HEADER ================= */}
+        <header>
+          <p className="font-jost text-[10px] uppercase tracking-[0.3em] text-black/40 sm:text-[11px]">
             La collection
           </p>
 
@@ -127,25 +133,34 @@ export default function ProductCollection() {
           </h1>
 
           <p className="mt-4 max-w-lg font-jost text-xs leading-5 text-black/50 sm:text-sm">
-            Découvrez notre sélection de pièces pensées pour accompagner votre
-            style avec élégance et simplicité.
+            Découvrez notre sélection de pièces pensées pour
+            accompagner votre style avec élégance et simplicité.
           </p>
         </header>
 
-        {/* Controls */}
+        {/* ================= CONTROLS ================= */}
         <div className="mt-10 flex flex-col gap-5 border-y border-black/10 py-5 lg:flex-row lg:items-center lg:justify-between">
+
           {/* Filters */}
           <div className="flex flex-wrap gap-3">
+
             {/* Category */}
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
               className="cursor-pointer border border-black/15 bg-transparent px-3 py-2 font-jost text-[10px] uppercase tracking-[0.12em] text-black outline-none transition-colors hover:border-black/40 lg:text-[15px] lg:tracking-[0.05em]"
             >
-              <option value="Toutes">Toutes les catégories</option>
-              <option value="Femme">Femme</option>
-              <option value="Homme">Homme</option>
-              <option value="Unisex">Enfant</option>
+              <option value="Toutes">
+                Toutes les catégories
+              </option>
+
+              <option value="Femme">
+                Femme
+              </option>
+
+              <option value="Homme">
+                Homme
+              </option>
             </select>
 
             {/* Availability */}
@@ -154,9 +169,17 @@ export default function ProductCollection() {
               onChange={(e) => setAvailability(e.target.value)}
               className="cursor-pointer border border-black/15 bg-transparent px-3 py-2 font-jost text-[10px] uppercase tracking-[0.12em] text-black outline-none transition-colors hover:border-black/40 lg:text-[15px] lg:tracking-[0.05em]"
             >
-              <option value="Toutes">Disponibilité</option>
-              <option value="En stock">En stock</option>
-              <option value="Rupture de stock">Rupture de stock</option>
+              <option value="Toutes">
+                Disponibilité
+              </option>
+
+              <option value="En stock">
+                En stock
+              </option>
+
+              <option value="Rupture de stock">
+                Rupture de stock
+              </option>
             </select>
 
             {/* Price */}
@@ -165,10 +188,21 @@ export default function ProductCollection() {
               onChange={(e) => setPriceRange(e.target.value)}
               className="cursor-pointer border border-black/15 bg-transparent px-3 py-2 font-jost text-[10px] uppercase tracking-[0.12em] text-black outline-none transition-colors hover:border-black/40 lg:text-[15px] lg:tracking-[0.05em]"
             >
-              <option value="Tous">Prix</option>
-              <option value="moins-10000">Moins de 10 000 DA</option>
-              <option value="10000-15000">10 000 – 15 000 DA</option>
-              <option value="plus-15000">Plus de 15 000 DA</option>
+              <option value="Tous">
+                Prix
+              </option>
+
+              <option value="moins-10000">
+                Moins de 10 000 DA
+              </option>
+
+              <option value="10000-15000">
+                10 000 – 15 000 DA
+              </option>
+
+              <option value="plus-15000">
+                Plus de 15 000 DA
+              </option>
             </select>
 
             {/* Reset */}
@@ -192,33 +226,49 @@ export default function ProductCollection() {
               onChange={(e) => setSortBy(e.target.value)}
               className="cursor-pointer border-none bg-transparent font-jost text-[10px] uppercase tracking-[0.12em] text-black outline-none lg:text-[15px] lg:tracking-[0.05em]"
             >
-              <option value="recent">Nouveautés</option>
-              <option value="price-asc">Prix : croissant</option>
-              <option value="price-desc">Prix : décroissant</option>
-              <option value="name-asc">Nom : A → Z</option>
+              <option value="recent">
+                Nouveautés
+              </option>
+
+              <option value="price-asc">
+                Prix : croissant
+              </option>
+
+              <option value="price-desc">
+                Prix : décroissant
+              </option>
+
+              <option value="name-asc">
+                Nom : A → Z
+              </option>
             </select>
           </div>
         </div>
 
-        {/* Results count */}
+        {/* ================= RESULTS COUNT ================= */}
         <div className="mt-8 flex items-center justify-between">
           <p className="font-jost text-[9px] uppercase tracking-[0.2em] text-black/40 lg:text-[13px]">
             {filteredProducts.length}{" "}
-            {filteredProducts.length > 1 ? "produits" : "produit"}
+            {filteredProducts.length > 1
+              ? "produits"
+              : "produit"}
           </p>
         </div>
 
-        {/* Products */}
+        {/* ================= PRODUCTS ================= */}
         {filteredProducts.length > 0 ? (
-          <div className="grid grid-cols-2 gap-x-3 gap-y-8 sm:grid-cols-3 lg:grid-cols-4 lg:gap-x-5 lg:gap-y-10">
+          <div className="mt-6 grid grid-cols-2 gap-x-3 gap-y-8 sm:grid-cols-3 lg:grid-cols-4 lg:gap-x-5 lg:gap-y-10">
             {filteredProducts.map((product) => (
-              <div key={product.id} className="max-w-[260px]">
+              <div
+                key={product.id}
+                className="w-full max-w-[260px]"
+              >
                 <ProductCard product={product} />
               </div>
             ))}
           </div>
         ) : (
-          /* Empty state */
+          /* ================= EMPTY STATE ================= */
           <div className="flex min-h-[300px] items-center justify-center">
             <div className="text-center">
               <p className="font-jost text-sm uppercase tracking-[0.15em] text-black">
