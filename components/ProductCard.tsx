@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import { ShoppingBag, ArrowUpRight } from "lucide-react";
 
 type Product = {
@@ -23,19 +24,61 @@ export default function ProductCard({
   product,
   isNew = false,
 }: ProductCardProps) {
+  const [adding, setAdding] = useState(false);
+  const [added, setAdded] = useState(false);
+
+  const handleAddToCart = async () => {
+    try {
+      setAdding(true);
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/cart`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({
+            productId: product.id,
+            quantity: 1,
+          }),
+        },
+      );
+
+      if (!response.ok) {
+        throw new Error("Erreur lors de l'ajout au panier");
+      }
+
+      const data = await response.json();
+
+      console.log("Produit ajouté au panier :", data);
+
+      setAdded(true);
+
+      setTimeout(() => {
+        setAdded(false);
+      }, 1500);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setAdding(false);
+    }
+  };
+
   return (
-    <div className="group">
-      {/* Image */}
+    <div className="w-full">
+      {/* ================= IMAGE ================= */}
       <Link
         href={`/products/${product.id}`}
-        className="relative block aspect-[3/4] overflow-hidden bg-[#C8C5C0]"
+        className="group relative block aspect-[3/4] overflow-hidden bg-[#C8C5C0]"
       >
         <Image
           src={product.image}
           alt={product.name}
           fill
+          className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-          className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
         />
 
         {/* Nouveau */}
@@ -53,7 +96,7 @@ export default function ProductCard({
         </div>
       </Link>
 
-      {/* Product Info */}
+      {/* ================= PRODUCT INFO ================= */}
       <div className="flex min-h-[175px] flex-col pt-4 sm:min-h-[185px]">
         <div className="flex items-start justify-between gap-2">
           <div>
@@ -81,13 +124,16 @@ export default function ProductCard({
           {product.description}
         </p>
 
-        {/* Add to Cart */}
+        {/* ================= ADD TO CART ================= */}
         <button
           type="button"
-          className="mt-auto flex w-full cursor-pointer items-center justify-center gap-2 border border-black bg-black px-3 py-2.5 font-jost text-[8px] uppercase tracking-[0.18em] text-white transition-all duration-300 hover:bg-transparent hover:text-black sm:py-3 sm:text-[9px]"
+          disabled={adding}
+          onClick={handleAddToCart}
+          className="mt-auto flex w-full cursor-pointer items-center justify-center gap-2 border border-black bg-black px-3 py-2.5 font-jost text-[8px] uppercase tracking-[0.18em] text-white transition-all duration-300 hover:bg-transparent hover:text-black disabled:cursor-not-allowed disabled:opacity-60 sm:py-3 sm:text-[9px]"
         >
           <ShoppingBag className="h-3.5 w-3.5" strokeWidth={1.3} />
-          Ajouter au panier
+
+          {adding ? "Ajout..." : added ? "Ajouté ✓" : "Ajouter au panier"}
         </button>
       </div>
     </div>
