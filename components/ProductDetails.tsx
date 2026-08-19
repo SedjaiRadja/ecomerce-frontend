@@ -11,9 +11,9 @@ import {
   Plus,
   ShoppingBag,
 } from "lucide-react";
-
+import { useCart } from "@/components/CartProvider";
 type Product = {
-  id: string;
+  _id: string;
   name: string;
   description: string;
   price: number;
@@ -33,7 +33,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
   const [cartMessage, setCartMessage] = useState("");
   const [cartError, setCartError] = useState("");
   const images = [product.image, product.image, product.image, product.image];
-
+const { addToCart } = useCart();
   const [selectedImage, setSelectedImage] = useState(product.image);
 
   const increaseQuantity = () => {
@@ -47,46 +47,27 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
       setQuantity((prev) => prev - 1);
     }
   };
-  const addToCart = async () => {
-    if (product.stock <= 0) return;
+  const handleAddToCart = async () => {
+  if (product.stock <= 0) return;
 
-    setIsAddingToCart(true);
-    setCartMessage("");
-    setCartError("");
+  setIsAddingToCart(true);
+  setCartMessage("");
+  setCartError("");
 
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/cart`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-          body: JSON.stringify({
-            productId: product.id,
-            quantity,
-          }),
-        },
-      );
+  try {
+    await addToCart(product._id, quantity);
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(
-          data.message || data || "Impossible d'ajouter au panier",
-        );
-      }
-
-      setCartMessage("Produit ajouté au panier");
-    } catch (error) {
-      setCartError(
-        error instanceof Error ? error.message : "Une erreur est survenue",
-      );
-    } finally {
-      setIsAddingToCart(false);
-    }
-  };
+    setCartMessage("Produit ajouté au panier");
+  } catch (error) {
+    setCartError(
+      error instanceof Error
+        ? error.message
+        : "Une erreur est survenue",
+    );
+  } finally {
+    setIsAddingToCart(false);
+  }
+};
   return (
     <main className="min-h-screen bg-[#F5F3F0] px-4 py-8 sm:px-6 lg:px-10">
       <div className="mx-auto max-w-7xl">
@@ -236,10 +217,10 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
               {/* Add to cart */}
               <button
-                type="button"
-                onClick={addToCart}
-                disabled={product.stock === 0 || isAddingToCart}
-                className="
+  type="button"
+  onClick={handleAddToCart}
+  disabled={product.stock === 0 || isAddingToCart}
+  className="
     group
     flex
     min-h-12
@@ -263,11 +244,11 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
     disabled:cursor-not-allowed
     disabled:opacity-40
   "
-              >
-                <ShoppingBag className="h-4 w-4" strokeWidth={1.2} />
+>
+  <ShoppingBag className="h-4 w-4" strokeWidth={1.2} />
 
-                {isAddingToCart ? "Ajout..." : "Ajouter au panier"}
-              </button>
+  {isAddingToCart ? "Ajout..." : "Ajouter au panier"}
+</button>
 
               {/* Wishlist */}
               <button

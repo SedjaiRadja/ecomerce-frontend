@@ -14,7 +14,7 @@ type Product = {
 };
 
 type ProductCardProduct = {
-  id: string;
+  _id: string;
   name: string;
   description: string;
   price: number;
@@ -250,7 +250,7 @@ export default function ProductCollection() {
         <div className="mt-6 grid grid-cols-2 gap-x-3 gap-y-8 sm:grid-cols-3 lg:grid-cols-4 lg:gap-x-5 lg:gap-y-10">
           {filteredProducts.map((product) => {
             const productForCard: ProductCardProduct = {
-              id: product._id,
+              _id: product._id,
               name: product.name,
               description: product.description,
               price: product.price,

@@ -4,7 +4,6 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useState,
   type ReactNode,
 } from "react";
@@ -17,6 +16,8 @@ type CartProduct = {
   price: number;
   image: string;
   stock: number;
+  category?: string;
+  description?: string;
 };
 
 type CartItem = {
@@ -70,18 +71,21 @@ export default function CartProvider({ children }: { children: ReactNode }) {
         credentials: "include",
       });
 
-      // User has no cart yet
-      if (response.status === 401 || response.status === 404) {
+      // No cart yet
+      if (response.status === 404) {
         setCart(null);
-        setError(null);
         return;
       }
 
       if (!response.ok) {
-        throw new Error("Impossible de récupérer le panier");
+        const message = await response.text();
+
+        throw new Error(message || "Impossible de récupérer le panier");
       }
 
       const data: Cart = await response.json();
+
+      console.log("CART FROM SERVER:", data);
 
       setCart(data);
     } catch (err) {
@@ -95,53 +99,9 @@ export default function CartProvider({ children }: { children: ReactNode }) {
 
   /*
    * =========================
-   * LOAD CART
+   * LOAD CART ON MOUNT
    * =========================
    */
-
-  useEffect(() => {
-    let cancelled = false;
-
-    const loadCart = async () => {
-      try {
-        const response = await fetch(`${API_URL}/api/cart`, {
-          method: "GET",
-          credentials: "include",
-        });
-
-        if (cancelled) return;
-
-        if (response.status === 404) {
-          setCart(null);
-          return;
-        }
-
-        if (!response.ok) {
-          throw new Error("Impossible de récupérer le panier");
-        }
-
-        const data: Cart = await response.json();
-
-        if (!cancelled) {
-          setCart(data);
-        }
-      } catch (err) {
-        if (cancelled) return;
-
-        console.error("Cart fetch error:", err);
-
-        setError(
-          err instanceof Error ? err.message : "Une erreur est survenue",
-        );
-      }
-    };
-
-    loadCart();
-
-    return () => {
-      cancelled = true;
-    };
-  }, []);
 
   /*
    * =========================
@@ -151,14 +111,24 @@ export default function CartProvider({ children }: { children: ReactNode }) {
 
   const addToCart = async (productId: string, quantity = 1) => {
     try {
+      if (!productId) {
+        throw new Error("Product ID is required");
+      }
+
+      if (!Number.isInteger(quantity) || quantity <= 0) {
+        throw new Error("Quantity must be a positive integer");
+      }
+
       setLoading(true);
       setError(null);
+
       console.log("CART REQUEST:", {
         productId,
         quantity,
         typeOfProductId: typeof productId,
         typeOfQuantity: typeof quantity,
       });
+
       const response = await fetch(`${API_URL}/api/cart`, {
         method: "POST",
         headers: {
@@ -176,10 +146,18 @@ export default function CartProvider({ children }: { children: ReactNode }) {
 
         throw new Error(message || "Impossible d'ajouter le produit au panier");
       }
-      const data = await response.json();
-      console.log("CART AFTER ADD:", data.cart);
 
-      setCart(data.cart);
+      await response.json();
+
+      console.log("Produit ajouté au panier");
+
+      /*
+       * Important:
+       * Le POST retourne le produit comme ObjectId.
+       * On refait donc GET /api/cart afin d'obtenir
+       * items.product avec populate().
+       */
+      await refreshCart();
     } catch (err) {
       console.error("Add to cart error:", err);
 
@@ -204,7 +182,11 @@ export default function CartProvider({ children }: { children: ReactNode }) {
 
   const updateQuantity = async (productId: string, quantity: number) => {
     try {
-      if (quantity <= 0) {
+      if (!productId) {
+        throw new Error("Product ID is required");
+      }
+
+      if (!Number.isInteger(quantity) || quantity <= 0) {
         await removeFromCart(productId);
         return;
       }
@@ -229,9 +211,12 @@ export default function CartProvider({ children }: { children: ReactNode }) {
         throw new Error(message || "Impossible de modifier la quantité");
       }
 
-      const data = await response.json();
+      await response.json();
 
-      setCart(data.cart);
+      /*
+       * Re-fetch pour récupérer les produits avec populate()
+       */
+      await refreshCart();
     } catch (err) {
       console.error("Update cart error:", err);
 
@@ -256,6 +241,10 @@ export default function CartProvider({ children }: { children: ReactNode }) {
 
   const removeFromCart = async (productId: string) => {
     try {
+      if (!productId) {
+        throw new Error("Product ID is required");
+      }
+
       setLoading(true);
       setError(null);
 
@@ -270,7 +259,11 @@ export default function CartProvider({ children }: { children: ReactNode }) {
         throw new Error(message || "Impossible de supprimer le produit");
       }
 
-      // Refresh cart after deleting
+      await response.text();
+
+      /*
+       * Refresh après suppression
+       */
       await refreshCart();
     } catch (err) {
       console.error("Remove cart item error:", err);
@@ -350,6 +343,12 @@ export default function CartProvider({ children }: { children: ReactNode }) {
 
       return total + item.product.price * item.quantity;
     }, 0) ?? 0;
+
+  /*
+   * =========================
+   * PROVIDER
+   * =========================
+   */
 
   return (
     <CartContext.Provider

@@ -4,9 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { ShoppingBag, ArrowUpRight } from "lucide-react";
+import { useCart } from "@/components/CartProvider";
 
 type Product = {
-  id: string;
+  _id: string;
   name: string;
   description: string;
   price: number;
@@ -24,53 +25,34 @@ export default function ProductCard({
   product,
   isNew = false,
 }: ProductCardProps) {
-  const [adding, setAdding] = useState(false);
-  const [added, setAdded] = useState(false);
+  const { addToCart } = useCart();
 
-  const handleAddToCart = async () => {
-    try {
-      setAdding(true);
+const [adding, setAdding] = useState(false);
+const [added, setAdded] = useState(false);
 
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/cart`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-          body: JSON.stringify({
-            productId: product.id,
-            quantity: 1,
-          }),
-        },
-      );
+const handleAddToCart = async () => {
+  try {
+    console.log("PRODUCT SENT TO CART:", {
+      id: product._id,
+      name: product.name,
+      quantity: 1,
+    });
 
-      if (!response.ok) {
-        throw new Error("Erreur lors de l'ajout au panier");
-      }
+    await addToCart(product._id, 1);
 
-      const data = await response.json();
+    console.log("Produit ajouté au panier");
 
-      console.log("Produit ajouté au panier :", data);
-
-      setAdded(true);
-
-      setTimeout(() => {
-        setAdded(false);
-      }, 1500);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setAdding(false);
-    }
-  };
+  } catch (error) {
+    console.error("Erreur lors de l'ajout au panier :", error);
+  }
+};
+  
 
   return (
     <div className="w-full">
       {/* ================= IMAGE ================= */}
       <Link
-        href={`/products/${product.id}`}
+        href={`/products/${product._id}`}
         className="group relative block aspect-[3/4] overflow-hidden bg-[#C8C5C0]"
       >
         <Image
@@ -106,7 +88,7 @@ export default function ProductCard({
             </p>
 
             {/* Name */}
-            <Link href={`/products/${product.id}`}>
+            <Link href={`/products/${product._id}`}>
               <h3 className="font-jost text-xs font-medium tracking-wide text-black sm:text-sm">
                 {product.name}
               </h3>

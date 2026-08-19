@@ -1,17 +1,10 @@
 import type { Metadata } from "next";
-import { Jost } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import Footer from "../components/Footer";
-
-const jost = Jost({
-  variable: "--font-jost",
-  subsets: ["latin"],
-});
+import CartProvider from "@/components/CartProvider";
 
 export const metadata: Metadata = {
   title: "Allure",
-  description: "Allure - L'élégance au quotidien.",
+  description: "Allure — Une élégance intemporelle.",
 };
 
 export default function RootLayout({
@@ -21,10 +14,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr">
-      <body className={`${jost.variable} antialiased`}>
-        <Navbar />
-        {children}
-        <Footer />
+      <body>
+        <CartProvider>
+          {children}
+        </CartProvider>
       </body>
     </html>
   );
