@@ -14,8 +14,10 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL;
 type CartProduct = {
   _id: string;
   name: string;
+  description: string;
   price: number;
   image: string;
+  category: string;
   stock: number;
 };
 
@@ -159,6 +161,12 @@ export default function CartProvider({ children }: { children: ReactNode }) {
         typeOfProductId: typeof productId,
         typeOfQuantity: typeof quantity,
       });
+      console.log("FINAL CART REQUEST:", {
+  productId,
+  quantity,
+  productIdType: typeof productId,
+  quantityType: typeof quantity,
+});
       const response = await fetch(`${API_URL}/api/cart`, {
         method: "POST",
         headers: {

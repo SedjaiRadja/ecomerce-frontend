@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 import { ShoppingBag, ArrowUpRight } from "lucide-react";
+import { useState } from "react";
 import { useCart } from "@/components/CartProvider";
 
 type Product = {
@@ -27,30 +27,40 @@ export default function ProductCard({
 }: ProductCardProps) {
   const { addToCart } = useCart();
 
-const [adding, setAdding] = useState(false);
-const [added, setAdded] = useState(false);
+  const [adding, setAdding] = useState(false);
+  const [added, setAdded] = useState(false);
 
-const handleAddToCart = async () => {
-  try {
-    console.log("PRODUCT SENT TO CART:", {
-      id: product._id,
-      name: product.name,
-      quantity: 1,
-    });
+  const handleAddToCart = async () => {
+    if (product.stock <= 0) return;
 
-    await addToCart(product._id, 1);
+    try {
+      setAdding(true);
 
-    console.log("Produit ajouté au panier");
+      console.log("PRODUCT SENT TO CART:", {
+        id: product._id,
+        name: product.name,
+        quantity: 1,
+      });
 
-  } catch (error) {
-    console.error("Erreur lors de l'ajout au panier :", error);
-  }
-};
-  
+      await addToCart(product._id, 1);
+
+      console.log("Produit ajouté au panier");
+
+      setAdded(true);
+
+      setTimeout(() => {
+        setAdded(false);
+      }, 1500);
+    } catch (error) {
+      console.error("Erreur lors de l'ajout au panier :", error);
+    } finally {
+      setAdding(false);
+    }
+  };
 
   return (
     <div className="w-full">
-      {/* ================= IMAGE ================= */}
+      {/* IMAGE */}
       <Link
         href={`/products/${product._id}`}
         className="group relative block aspect-[3/4] overflow-hidden bg-[#C8C5C0]"
@@ -78,7 +88,7 @@ const handleAddToCart = async () => {
         </div>
       </Link>
 
-      {/* ================= PRODUCT INFO ================= */}
+      {/* PRODUCT INFO */}
       <div className="flex min-h-[175px] flex-col pt-4 sm:min-h-[185px]">
         <div className="flex items-start justify-between gap-2">
           <div>
@@ -106,16 +116,22 @@ const handleAddToCart = async () => {
           {product.description}
         </p>
 
-        {/* ================= ADD TO CART ================= */}
+        {/* ADD TO CART */}
         <button
           type="button"
-          disabled={adding}
           onClick={handleAddToCart}
+          disabled={adding || product.stock <= 0}
           className="mt-auto flex w-full cursor-pointer items-center justify-center gap-2 border border-black bg-black px-3 py-2.5 font-jost text-[8px] uppercase tracking-[0.18em] text-white transition-all duration-300 hover:bg-transparent hover:text-black disabled:cursor-not-allowed disabled:opacity-60 sm:py-3 sm:text-[9px]"
         >
           <ShoppingBag className="h-3.5 w-3.5" strokeWidth={1.3} />
 
-          {adding ? "Ajout..." : added ? "Ajouté ✓" : "Ajouter au panier"}
+          {product.stock <= 0
+            ? "Rupture de stock"
+            : adding
+              ? "Ajout..."
+              : added
+                ? "Ajouté ✓"
+                : "Ajouter au panier"}
         </button>
       </div>
     </div>
