@@ -2,9 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Search, Heart, User, ShoppingBag } from "lucide-react";
+import type { CartUpdatedDetail } from "@/components/CartProvider";
 
 const NAV_LINKS = [
   { label: "Homme", href: "/products?gender=men" },
@@ -16,6 +17,51 @@ const NAV_LINKS = [
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
+
+  // Get cart count from backend
+  const refreshCartCount = useCallback(async () => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/cart/count`,
+        {
+          method: "GET",
+          credentials: "include",
+          cache: "no-store",
+        },
+      );
+
+      if (!response.ok) {
+        console.error("Failed to fetch cart count:", response.status);
+        return;
+      }
+
+      const data: { count: number } = await response.json();
+
+      setCartCount(data.count);
+    } catch (error) {
+      console.error("Cart count error:", error);
+    }
+  }, []);
+
+  // Load the initial count, then use mutation event payloads for updates.
+  useEffect(() => {
+    const handleCartUpdate = (event: Event) => {
+      const customEvent = event as CustomEvent<CartUpdatedDetail>;
+
+      setCartCount(customEvent.detail.count);
+    };
+
+    window.addEventListener("cart-updated", handleCartUpdate);
+
+    queueMicrotask(() => {
+      refreshCartCount();
+    });
+
+    return () => {
+      window.removeEventListener("cart-updated", handleCartUpdate);
+    };
+  }, [refreshCartCount]);
 
   return (
     <header className="relative z-50 bg-[#C8C5C0]">
@@ -78,14 +124,17 @@ export default function Navbar() {
           {/* Panier */}
           <Link
             href="/cart"
-            aria-label="Panier"
+            aria-label={`Panier, ${cartCount} articles`}
             className="relative text-dark-900 transition-colors hover:text-dark-700"
           >
             <ShoppingBag className="h-5 w-5" strokeWidth={1.5} />
 
-            <span className="absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-dark-900 text-[10px] text-white">
-              2
-            </span>
+            {/* Cart count badge */}
+            {cartCount > 0 && (
+              <span className="absolute -right-2 -top-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-dark-900 px-1 text-[10px] leading-none text-white">
+                {cartCount > 99 ? "99+" : cartCount}
+              </span>
+            )}
           </Link>
         </div>
 
@@ -196,7 +245,15 @@ export default function Navbar() {
                   className="flex items-center gap-2 text-sm text-black"
                   onClick={() => setOpen(false)}
                 >
-                  <ShoppingBag className="h-5 w-5" strokeWidth={1.5} />
+                  <span className="relative">
+                    <ShoppingBag className="h-5 w-5" strokeWidth={1.5} />
+
+                    {cartCount > 0 && (
+                      <span className="absolute -right-2 -top-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-dark-900 px-1 text-[10px] leading-none text-white">
+                        {cartCount > 99 ? "99+" : cartCount}
+                      </span>
+                    )}
+                  </span>
                   Cart
                 </Link>
               </li>

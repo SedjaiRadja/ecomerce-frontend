@@ -3,13 +3,8 @@
 import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  Minus,
-  Plus,
-  Trash2,
-  ArrowRight,
-  ShoppingBag,
-} from "lucide-react";
+import { Minus, Plus, Trash2, ArrowRight, ShoppingBag } from "lucide-react";
+import { dispatchCartUpdated } from "@/components/CartProvider";
 
 type Product = {
   _id: string;
@@ -35,12 +30,8 @@ type CartData = {
 export default function Cart() {
   const [cart, setCart] = useState<CartData | null>(null);
   const [loading, setLoading] = useState(true);
-  const [updatingProduct, setUpdatingProduct] = useState<string | null>(
-    null,
-  );
-  const [removingProduct, setRemovingProduct] = useState<string | null>(
-    null,
-  );
+  const [updatingProduct, setUpdatingProduct] = useState<string | null>(null);
+  const [removingProduct, setRemovingProduct] = useState<string | null>(null);
   const [clearing, setClearing] = useState(false);
 
   // ================= FETCH CART =================
@@ -85,10 +76,7 @@ export default function Cart() {
 
   // ================= UPDATE QUANTITY =================
 
-  const updateQuantity = async (
-    productId: string,
-    quantity: number,
-  ) => {
+  const updateQuantity = async (productId: string, quantity: number) => {
     if (quantity <= 0) return;
 
     try {
@@ -113,9 +101,10 @@ export default function Cart() {
         throw new Error(message);
       }
 
-      const data = await response.json();
+      const data: { cart: CartData } = await response.json();
 
       setCart(data.cart);
+      dispatchCartUpdated(data.cart.items);
     } catch (error) {
       console.error("Erreur lors de la mise à jour :", error);
     } finally {
@@ -142,7 +131,10 @@ export default function Cart() {
         throw new Error(message);
       }
 
-      await fetchCart();
+      const data: { cart: CartData } = await response.json();
+
+      setCart(data.cart);
+      dispatchCartUpdated(data.cart.items);
     } catch (error) {
       console.error("Erreur lors de la suppression :", error);
     } finally {
@@ -169,9 +161,10 @@ export default function Cart() {
         throw new Error(message);
       }
 
-      const data = await response.json();
+      const data: { cart: CartData } = await response.json();
 
       setCart(data.cart);
+      dispatchCartUpdated(data.cart.items);
     } catch (error) {
       console.error("Erreur lors du vidage du panier :", error);
     } finally {
@@ -185,8 +178,7 @@ export default function Cart() {
     if (!cart) return 0;
 
     return cart.items.reduce(
-      (total, item) =>
-        total + item.product.price * item.quantity,
+      (total, item) => total + item.product.price * item.quantity,
       0,
     );
   }, [cart]);
@@ -230,8 +222,8 @@ export default function Cart() {
             </h1>
 
             <p className="mx-auto mt-4 max-w-md font-jost text-xs leading-5 text-black/50 sm:text-sm">
-              Découvrez notre sélection et trouvez les pièces
-              qui correspondent à votre style.
+              Découvrez notre sélection et trouvez les pièces qui correspondent
+              à votre style.
             </p>
 
             <Link
@@ -239,11 +231,7 @@ export default function Cart() {
               className="mt-8 inline-flex items-center gap-3 bg-black px-6 py-3 font-jost text-[9px] uppercase tracking-[0.2em] text-white transition-colors duration-300 hover:bg-black/80"
             >
               Découvrir la collection
-
-              <ArrowRight
-                className="h-3.5 w-3.5"
-                strokeWidth={1.3}
-              />
+              <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.3} />
             </Link>
           </div>
         </div>
@@ -286,9 +274,7 @@ export default function Cart() {
             <div className="mb-5 flex items-center justify-between">
               <p className="font-jost text-[9px] uppercase tracking-[0.2em] text-black/40">
                 {cart.items.length}{" "}
-                {cart.items.length > 1
-                  ? "articles"
-                  : "article"}
+                {cart.items.length > 1 ? "articles" : "article"}
               </p>
 
               <button
@@ -304,16 +290,11 @@ export default function Cart() {
             <div className="divide-y divide-black/10 border-y border-black/10">
               {cart.items.map((item) => {
                 const product = item.product;
-                const isUpdating =
-                  updatingProduct === product._id;
-                const isRemoving =
-                  removingProduct === product._id;
+                const isUpdating = updatingProduct === product._id;
+                const isRemoving = removingProduct === product._id;
 
                 return (
-                  <div
-                    key={product._id}
-                    className="flex gap-4 py-5 sm:gap-6"
-                  >
+                  <div key={product._id} className="flex gap-4 py-5 sm:gap-6">
                     {/* IMAGE */}
 
                     <Link
@@ -338,9 +319,7 @@ export default function Cart() {
                             {product.category}
                           </p>
 
-                          <Link
-                            href={`/products/${product._id}`}
-                          >
+                          <Link href={`/products/${product._id}`}>
                             <h2 className="mt-1 font-jost text-sm font-medium tracking-wide text-black sm:text-base">
                               {product.name}
                             </h2>
@@ -348,10 +327,9 @@ export default function Cart() {
                         </div>
 
                         <p className="whitespace-nowrap font-jost text-xs text-black sm:text-sm">
-                          {(
-                            product.price *
-                            item.quantity
-                          ).toLocaleString("fr-FR")}{" "}
+                          {(product.price * item.quantity).toLocaleString(
+                            "fr-FR",
+                          )}{" "}
                           DA
                         </p>
                       </div>
@@ -366,49 +344,30 @@ export default function Cart() {
                         <div className="flex items-center border border-black/15">
                           <button
                             type="button"
-                            disabled={
-                              isUpdating ||
-                              item.quantity <= 1
-                            }
+                            disabled={isUpdating || item.quantity <= 1}
                             onClick={() =>
-                              updateQuantity(
-                                product._id,
-                                item.quantity - 1,
-                              )
+                              updateQuantity(product._id, item.quantity - 1)
                             }
                             className="flex h-8 w-8 items-center justify-center transition-colors hover:bg-black hover:text-white disabled:cursor-not-allowed disabled:opacity-30"
                           >
-                            <Minus
-                              className="h-3 w-3"
-                              strokeWidth={1.3}
-                            />
+                            <Minus className="h-3 w-3" strokeWidth={1.3} />
                           </button>
 
                           <span className="flex h-8 min-w-8 items-center justify-center border-x border-black/15 font-jost text-[10px]">
-                            {isUpdating
-                              ? "..."
-                              : item.quantity}
+                            {isUpdating ? "..." : item.quantity}
                           </span>
 
                           <button
                             type="button"
                             disabled={
-                              isUpdating ||
-                              item.quantity >=
-                                product.stock
+                              isUpdating || item.quantity >= product.stock
                             }
                             onClick={() =>
-                              updateQuantity(
-                                product._id,
-                                item.quantity + 1,
-                              )
+                              updateQuantity(product._id, item.quantity + 1)
                             }
                             className="flex h-8 w-8 items-center justify-center transition-colors hover:bg-black hover:text-white disabled:cursor-not-allowed disabled:opacity-30"
                           >
-                            <Plus
-                              className="h-3 w-3"
-                              strokeWidth={1.3}
-                            />
+                            <Plus className="h-3 w-3" strokeWidth={1.3} />
                           </button>
                         </div>
 
@@ -417,19 +376,12 @@ export default function Cart() {
                         <button
                           type="button"
                           disabled={isRemoving}
-                          onClick={() =>
-                            removeProduct(product._id)
-                          }
+                          onClick={() => removeProduct(product._id)}
                           className="flex items-center gap-1.5 font-jost text-[8px] uppercase tracking-[0.15em] text-black/40 transition-colors hover:text-black disabled:opacity-40"
                         >
-                          <Trash2
-                            className="h-3 w-3"
-                            strokeWidth={1.2}
-                          />
+                          <Trash2 className="h-3 w-3" strokeWidth={1.2} />
 
-                          {isRemoving
-                            ? "Suppression..."
-                            : "Supprimer"}
+                          {isRemoving ? "Suppression..." : "Supprimer"}
                         </button>
                       </div>
                     </div>
@@ -487,16 +439,12 @@ export default function Cart() {
               className="flex w-full items-center justify-center gap-3 bg-black px-5 py-3.5 font-jost text-[9px] uppercase tracking-[0.2em] text-white transition-colors duration-300 hover:bg-black/80"
             >
               Passer la commande
-
-              <ArrowRight
-                className="h-3.5 w-3.5"
-                strokeWidth={1.3}
-              />
+              <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.3} />
             </button>
 
             <p className="mt-4 text-center font-jost text-[8px] leading-4 text-black/40">
-              Les frais de livraison sont calculés selon
-              votre adresse lors de la commande.
+              Les frais de livraison sont calculés selon votre adresse lors de
+              la commande.
             </p>
           </aside>
         </div>

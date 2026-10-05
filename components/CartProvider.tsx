@@ -33,6 +33,22 @@ type Cart = {
   items: CartItem[];
 };
 
+export type CartUpdatedDetail = {
+  count: number;
+};
+
+export function dispatchCartUpdated(
+  items: readonly { quantity: number }[],
+) {
+  const count = items.reduce((total, item) => total + item.quantity, 0);
+
+  window.dispatchEvent(
+    new CustomEvent<CartUpdatedDetail>("cart-updated", {
+      detail: { count },
+    }),
+  );
+}
+
 type CartContextType = {
   cart: Cart | null;
   items: CartItem[];
@@ -184,10 +200,11 @@ export default function CartProvider({ children }: { children: ReactNode }) {
 
         throw new Error(message || "Impossible d'ajouter le produit au panier");
       }
-      const data = await response.json();
+      const data: { cart: Cart } = await response.json();
       console.log("CART AFTER ADD:", data.cart);
 
       setCart(data.cart);
+      dispatchCartUpdated(data.cart.items);
     } catch (err) {
       console.error("Add to cart error:", err);
 
@@ -237,9 +254,10 @@ export default function CartProvider({ children }: { children: ReactNode }) {
         throw new Error(message || "Impossible de modifier la quantité");
       }
 
-      const data = await response.json();
+      const data: { cart: Cart } = await response.json();
 
       setCart(data.cart);
+      dispatchCartUpdated(data.cart.items);
     } catch (err) {
       console.error("Update cart error:", err);
 
@@ -278,8 +296,10 @@ export default function CartProvider({ children }: { children: ReactNode }) {
         throw new Error(message || "Impossible de supprimer le produit");
       }
 
-      // Refresh cart after deleting
-      await refreshCart();
+      const data: { cart: Cart } = await response.json();
+
+      setCart(data.cart);
+      dispatchCartUpdated(data.cart.items);
     } catch (err) {
       console.error("Remove cart item error:", err);
 
@@ -318,9 +338,10 @@ export default function CartProvider({ children }: { children: ReactNode }) {
         throw new Error(message || "Impossible de vider le panier");
       }
 
-      const data = await response.json();
+      const data: { cart: Cart } = await response.json();
 
       setCart(data.cart);
+      dispatchCartUpdated(data.cart.items);
     } catch (err) {
       console.error("Clear cart error:", err);
 

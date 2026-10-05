@@ -12,6 +12,7 @@ import {
   ShoppingBag,
 } from "lucide-react";
 import { useCart } from "@/components/CartProvider";
+
 type Product = {
   _id: string;
   name: string;
@@ -33,7 +34,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
   const [cartMessage, setCartMessage] = useState("");
   const [cartError, setCartError] = useState("");
   const images = [product.image, product.image, product.image, product.image];
-const { addToCart } = useCart();
+  const { addToCart } = useCart();
   const [selectedImage, setSelectedImage] = useState(product.image);
 
   const increaseQuantity = () => {
@@ -48,26 +49,25 @@ const { addToCart } = useCart();
     }
   };
   const handleAddToCart = async () => {
-  if (product.stock <= 0) return;
+    if (product.stock <= 0) return;
 
-  setIsAddingToCart(true);
-  setCartMessage("");
-  setCartError("");
+    setIsAddingToCart(true);
+    setCartMessage("");
+    setCartError("");
 
-  try {
-    await addToCart(product._id, quantity);
+    try {
+      await addToCart(product._id, quantity);
 
-    setCartMessage("Produit ajouté au panier");
-  } catch (error) {
-    setCartError(
-      error instanceof Error
-        ? error.message
-        : "Une erreur est survenue",
-    );
-  } finally {
-    setIsAddingToCart(false);
-  }
-};
+      setCartMessage("Produit ajouté au panier");
+    } catch (error) {
+      setCartError(
+        error instanceof Error ? error.message : "Une erreur est survenue",
+      );
+    } finally {
+      setIsAddingToCart(false);
+    }
+  };
+
   return (
     <main className="min-h-screen bg-[#F5F3F0] px-4 py-8 sm:px-6 lg:px-10">
       <div className="mx-auto max-w-7xl">
@@ -217,10 +217,10 @@ const { addToCart } = useCart();
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
               {/* Add to cart */}
               <button
-  type="button"
-  onClick={handleAddToCart}
-  disabled={product.stock === 0 || isAddingToCart}
-  className="
+                type="button"
+                onClick={handleAddToCart}
+                disabled={product.stock === 0 || isAddingToCart}
+                className="
     group
     flex
     min-h-12
@@ -244,11 +244,11 @@ const { addToCart } = useCart();
     disabled:cursor-not-allowed
     disabled:opacity-40
   "
->
-  <ShoppingBag className="h-4 w-4" strokeWidth={1.2} />
+              >
+                <ShoppingBag className="h-4 w-4" strokeWidth={1.2} />
 
-  {isAddingToCart ? "Ajout..." : "Ajouter au panier"}
-</button>
+                {isAddingToCart ? "Ajout..." : "Ajouter au panier"}
+              </button>
 
               {/* Wishlist */}
               <button
