@@ -9,23 +9,23 @@ export default function AboutPage() {
         <div className="mx-auto grid max-w-screen-xl items-center gap-12 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:gap-20 lg:px-8 lg:py-24">
           {/* Content */}
           <div className="font-light text-black/60">
-            <p className="mb-4 font-jost text-[10px] uppercase tracking-[0.32em] text-black/40 sm:text-[11px]">
+            <p className="mb-4 font-inter text-[10px] uppercase tracking-[0.32em] text-black/40 sm:text-[11px]">
               À propos d&apos;Allure
             </p>
 
-            <h2 className="mb-8 max-w-xl font-jost text-4xl font-light uppercase leading-[1.15] tracking-[0.07em] text-black sm:text-5xl lg:text-[54px]">
+            <h2 className="mb-8 max-w-xl font-playfair text-4xl font-light uppercase leading-[1.15] tracking-[0.07em] text-black sm:text-5xl lg:text-[54px]">
               L&apos;élégance
               <br />
               dans chaque détail.
             </h2>
 
             <div className="max-w-xl space-y-6">
-              <p className="font-jost text-sm leading-7 text-black/60 lg:text-[15px] lg:leading-8">
+              <p className="font-inter text-sm leading-7 text-black/60 lg:text-[15px] lg:leading-8">
                 Allure est née d&apos;une vision simple : proposer une mode
                 élégante, contemporaine et facile à porter au quotidien.
               </p>
 
-              <p className="font-jost text-sm leading-7 text-black/60 lg:text-[15px] lg:leading-8">
+              <p className="font-inter text-sm leading-7 text-black/60 lg:text-[15px] lg:leading-8">
                 Chaque pièce est sélectionnée avec attention pour son style, sa
                 qualité et sa capacité à traverser les tendances. Nous croyons
                 que le véritable style se trouve dans la simplicité, les détails
@@ -33,7 +33,7 @@ export default function AboutPage() {
                 une pièce qui nous ressemble.
               </p>
 
-              <p className="font-jost text-sm leading-7 text-black/60 lg:text-[15px] lg:leading-8">
+              <p className="font-inter text-sm leading-7 text-black/60 lg:text-[15px] lg:leading-8">
                 Plus qu&apos;une collection, Allure représente un univers pensé
                 autour d&apos;une esthétique intemporelle et raffinée.
               </p>
@@ -44,33 +44,33 @@ export default function AboutPage() {
               <div className="grid grid-cols-1 gap-7 sm:grid-cols-3 sm:gap-6 lg:gap-10">
                 {/* Qualité */}
                 <div>
-                  <p className="mb-2 font-jost text-[11px] uppercase tracking-[0.18em] text-black sm:text-[12px] lg:text-[13px]">
+                  <p className="mb-2 font-inter text-[11px] uppercase tracking-[0.18em] text-black sm:text-[12px] lg:text-[13px]">
                     Qualité
                   </p>
 
-                  <p className="font-jost text-[11px] leading-6 text-black/45 sm:text-[12px] lg:text-[13px]">
+                  <p className="font-inter text-[11px] leading-6 text-black/45 sm:text-[12px] lg:text-[13px]">
                     Des pièces choisies avec soin.
                   </p>
                 </div>
 
                 {/* Simplicité */}
                 <div>
-                  <p className="mb-2 font-jost text-[11px] uppercase tracking-[0.18em] text-black sm:text-[12px] lg:text-[13px]">
+                  <p className="mb-2 font-inter text-[11px] uppercase tracking-[0.18em] text-black sm:text-[12px] lg:text-[13px]">
                     Simplicité
                   </p>
 
-                  <p className="font-jost text-[11px] leading-6 text-black/45 sm:text-[12px] lg:text-[13px]">
+                  <p className="font-inter text-[11px] leading-6 text-black/45 sm:text-[12px] lg:text-[13px]">
                     Une esthétique moderne et épurée.
                   </p>
                 </div>
 
                 {/* Intemporalité */}
                 <div>
-                  <p className="mb-2 font-jost text-[11px] uppercase tracking-[0.18em] text-black sm:text-[12px] lg:text-[13px]">
+                  <p className="mb-2 font-inter text-[11px] uppercase tracking-[0.18em] text-black sm:text-[12px] lg:text-[13px]">
                     Intemporalité
                   </p>
 
-                  <p className="font-jost text-[11px] leading-6 text-black/45 sm:text-[12px] lg:text-[13px]">
+                  <p className="font-inter text-[11px] leading-6 text-black/45 sm:text-[12px] lg:text-[13px]">
                     Un style pensé pour durer.
                   </p>
                 </div>
@@ -102,17 +102,17 @@ export default function AboutPage() {
       {/* Philosophy */}
       <section className="border-t border-black/10 bg-[#C8C5C0]">
         <div className="mx-auto max-w-screen-xl px-4 py-16 text-center sm:px-6 lg:px-8 lg:py-20">
-          <p className="font-jost text-[9px] uppercase tracking-[0.3em] text-black/40 sm:text-[10px]">
+          <p className="font-inter text-[9px] uppercase tracking-[0.3em] text-black/40 sm:text-[10px]">
             Notre philosophie
           </p>
 
-          <h2 className="mx-auto mt-4 max-w-3xl font-jost text-2xl font-light uppercase tracking-[0.1em] text-black sm:text-3xl lg:text-4xl">
+          <h2 className="mx-auto mt-4 max-w-3xl font-playfair text-2xl font-light uppercase tracking-[0.1em] text-black sm:text-3xl lg:text-4xl">
             Des pièces qui restent,
             <br />
             au-delà des tendances.
           </h2>
 
-          <p className="mx-auto mt-6 max-w-xl font-jost text-xs leading-6 text-black/55 sm:text-sm sm:leading-7">
+          <p className="mx-auto mt-6 max-w-xl font-inter text-xs leading-6 text-black/55 sm:text-sm sm:leading-7">
             Allure privilégie une esthétique intemporelle, des silhouettes
             élégantes et des pièces faciles à intégrer à votre quotidien.
           </p>
@@ -123,18 +123,18 @@ export default function AboutPage() {
       <section className="bg-[#E8E5E0]">
         <div className="mx-auto flex max-w-screen-xl flex-col items-center justify-between gap-6 px-4 py-14 sm:px-6 md:flex-row lg:px-8">
           <div>
-            <p className="font-jost text-[9px] uppercase tracking-[0.3em] text-black/40 sm:text-[10px]">
+            <p className="font-inter text-[9px] uppercase tracking-[0.3em] text-black/40 sm:text-[10px]">
               Découvrez Allure
             </p>
 
-            <h2 className="mt-2 font-jost text-xl font-light uppercase tracking-[0.1em] text-black sm:text-2xl">
+            <h2 className="mt-2 font-playfair text-xl font-light uppercase tracking-[0.1em] text-black sm:text-2xl">
               Votre prochaine pièce vous attend.
             </h2>
           </div>
 
           <Link
             href="/products"
-            className="group flex items-center gap-2 border-b border-black pb-2 font-jost text-[9px] uppercase tracking-[0.2em] text-black"
+            className="group flex items-center gap-2 border-b border-black pb-2 font-inter text-[9px] uppercase tracking-[0.2em] text-black"
           >
             Voir la collection
             <ArrowUpRight

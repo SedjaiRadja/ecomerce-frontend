@@ -1,13 +1,24 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
+
 export default function Footer() {
+  const pathname = usePathname();
+  const isHomePage = pathname === "/";
+
   return (
-    <footer className="bg-gradient-to-br from-[#E8E5E0] via-[#C8C5C0] to-[#A9A59F] text-black">
+    <footer
+      className={
+        isHomePage
+          ? "bg-[#F8F6F2] text-[#292722]"
+          : "bg-gradient-to-br from-[#E8E5E0] via-[#C8C5C0] to-[#A9A59F] text-black"
+      }
+    >
       <div className="mx-auto max-w-6xl px-6 py-16 sm:px-8 sm:py-20 lg:px-10 lg:py-24">
-        {/* Main Footer */}
         <div className="grid gap-14 lg:grid-cols-[1.5fr_1fr_1fr_1fr] lg:gap-10">
-          {/* Brand */}
           <div>
             <Link href="/" className="inline-block">
               <Image
@@ -19,77 +30,50 @@ export default function Footer() {
               />
             </Link>
 
-            <p className="mt-5 max-w-xs font-jost text-sm leading-6 text-black/60">
+            <p
+              className={`mt-5 max-w-xs font-inter text-sm leading-6 ${
+                isHomePage ? "text-[#292722]/70" : "text-black/60"
+              }`}
+            >
               L&apos;élégance au quotidien, pensée pour celles et ceux qui
               apprécient les lignes simples et intemporelles.
             </p>
-
-            {/* <div className="mt-7 flex items-center gap-3">
-              <Link
-                href="#"
-                aria-label="Instagram"
-                className="
-                  flex h-9 w-9 items-center justify-center
-                  rounded-full border border-black/20
-                  transition-all duration-300
-                  hover:bg-black hover:text-white
-                "
-              >
-                <Instagram
-                  className="h-4 w-4"
-                  strokeWidth={1.2}
-                />
-              </Link>
-
-              <Link
-                href="#"
-                aria-label="Facebook"
-                className="
-                  flex h-9 w-9 items-center justify-center
-                  rounded-full border border-black/20
-                  transition-all duration-300
-                  hover:bg-black hover:text-white
-                "
-              >
-                <Facebook
-                  className="h-4 w-4"
-                  strokeWidth={1.2}
-                />
-              </Link>
-            </div> */}
           </div>
 
-          {/* Boutique */}
           <div>
-            <h3 className="font-jost text-[10px] uppercase tracking-[0.25em] text-black/50">
+            <h3
+              className={`font-inter text-[10px] uppercase tracking-[0.25em] ${
+                isHomePage ? "text-[#292722]/60" : "text-black/50"
+              }`}
+            >
               Boutique
             </h3>
 
             <div className="mt-5 flex flex-col gap-3">
               <Link
                 href="/products?gender=women"
-                className="w-fit font-jost text-sm transition-opacity hover:opacity-50"
+                className="w-fit font-inter text-sm transition-opacity hover:opacity-50"
               >
                 Femme
               </Link>
 
               <Link
                 href="/products?gender=men"
-                className="w-fit font-jost text-sm transition-opacity hover:opacity-50"
+                className="w-fit font-inter text-sm transition-opacity hover:opacity-50"
               >
                 Homme
               </Link>
 
               <Link
                 href="/products?gender=unisex"
-                className="w-fit font-jost text-sm transition-opacity hover:opacity-50"
+                className="w-fit font-inter text-sm transition-opacity hover:opacity-50"
               >
                 Enfants
               </Link>
 
               <Link
                 href="/products"
-                className="group flex w-fit items-center gap-1 font-jost text-sm transition-opacity hover:opacity-50"
+                className="group flex w-fit items-center gap-1 font-inter text-sm transition-opacity hover:opacity-50"
               >
                 Nouveautés
                 <ArrowUpRight
@@ -100,60 +84,66 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Allure */}
           <div>
-            <h3 className="font-jost text-[10px] uppercase tracking-[0.25em] text-black/50">
+            <h3
+              className={`font-inter text-[10px] uppercase tracking-[0.25em] ${
+                isHomePage ? "text-[#292722]/60" : "text-black/50"
+              }`}
+            >
               Allure
             </h3>
 
             <div className="mt-5 flex flex-col gap-3">
               <Link
                 href="/about"
-                className="w-fit font-jost text-sm transition-opacity hover:opacity-50"
+                className="w-fit font-inter text-sm transition-opacity hover:opacity-50"
               >
                 Notre histoire
               </Link>
 
               <Link
                 href="/products"
-                className="w-fit font-jost text-sm transition-opacity hover:opacity-50"
+                className="w-fit font-inter text-sm transition-opacity hover:opacity-50"
               >
                 Collection
               </Link>
 
               <Link
                 href="/contact"
-                className="w-fit font-jost text-sm transition-opacity hover:opacity-50"
+                className="w-fit font-inter text-sm transition-opacity hover:opacity-50"
               >
                 Contact
               </Link>
             </div>
           </div>
 
-          {/* Informations */}
           <div>
-            <h3 className="font-jost text-[10px] uppercase tracking-[0.25em] text-black/50">
+            <h3
+              className={`font-inter text-[10px] uppercase tracking-[0.25em] ${
+                isHomePage ? "text-[#292722]/60" : "text-black/50"
+              }`}
+            >
               Informations
             </h3>
 
             <div className="mt-5 flex flex-col gap-3">
               <Link
                 href="/contact"
-                className="w-fit font-jost text-sm transition-opacity hover:opacity-50"
+                className="w-fit font-inter text-sm transition-opacity hover:opacity-50"
               >
                 Livraison
               </Link>
 
               <Link
                 href="/contact"
-                className="w-fit font-jost text-sm transition-opacity hover:opacity-50"
+                className="w-fit font-inter text-sm transition-opacity hover:opacity-50"
               >
                 Retours
               </Link>
 
               <Link
                 href="/contact"
-                className="w-fit font-jost text-sm transition-opacity hover:opacity-50"
+                className="w-fit font-inter text-sm transition-opacity hover:opacity-50"
               >
                 Conditions
               </Link>
@@ -161,14 +151,25 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom */}
-        <div className="mt-16 border-t border-black/15 pt-6 sm:mt-20">
+        <div
+          className={`mt-16 border-t pt-6 sm:mt-20 ${
+            isHomePage ? "border-[#E8E2D9]" : "border-black/15"
+          }`}
+        >
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <p className="font-jost text-[9px] uppercase tracking-[0.15em] text-black/50 sm:text-[10px]">
+            <p
+              className={`font-inter text-[9px] uppercase tracking-[0.15em] sm:text-[10px] ${
+                isHomePage ? "text-[#292722]/60" : "text-black/50"
+              }`}
+            >
               © 2026 Allure. Tous droits réservés.
             </p>
 
-            <p className="font-jost text-[9px] uppercase tracking-[0.15em] text-black/50 sm:text-[10px]">
+            <p
+              className={`font-inter text-[9px] uppercase tracking-[0.15em] sm:text-[10px] ${
+                isHomePage ? "text-[#292722]/60" : "text-black/50"
+              }`}
+            >
               L&apos;élégance au quotidien.
             </p>
           </div>

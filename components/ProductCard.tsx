@@ -19,16 +19,19 @@ type Product = {
 type ProductCardProps = {
   product: Product;
   isNew?: boolean;
+  theme?: "default" | "home";
 };
 
 export default function ProductCard({
   product,
   isNew = false,
+  theme = "default",
 }: ProductCardProps) {
   const { addToCart } = useCart();
 
   const [adding, setAdding] = useState(false);
   const [added, setAdded] = useState(false);
+  const isHomeTheme = theme === "home";
 
   const handleAddToCart = async () => {
     if (product.stock <= 0) return;
@@ -60,10 +63,11 @@ export default function ProductCard({
 
   return (
     <div className="w-full">
-      {/* IMAGE */}
       <Link
         href={`/products/${product._id}`}
-        className="group relative block aspect-[3/4] overflow-hidden bg-[#C8C5C0]"
+        className={`group relative block aspect-[3/4] overflow-hidden ${
+          isHomeTheme ? "bg-[#E8E2D9]" : "bg-[#C8C5C0]"
+        }`}
       >
         <Image
           src={product.image}
@@ -73,55 +77,51 @@ export default function ProductCard({
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
         />
 
-        {/* Nouveau */}
         {isNew && (
           <div className="absolute left-2 top-2 z-10 sm:left-4 sm:top-4">
-            <span className="bg-[#C8C5C0]/90 px-2 py-1 font-jost text-[7px] uppercase tracking-[0.18em] text-black backdrop-blur-sm sm:px-3 sm:py-1.5 sm:text-[9px]">
+            <span className="bg-[#F8F6F2]/90 px-2 py-1 font-inter text-[7px] uppercase tracking-[0.18em] text-[#292722] backdrop-blur-sm sm:px-3 sm:py-1.5 sm:text-[9px]">
               Nouveau
             </span>
           </div>
         )}
 
-        {/* Arrow */}
-        <div className="absolute bottom-3 right-3 hidden h-8 w-8 items-center justify-center rounded-full bg-[#F5F3F0]/90 opacity-0 backdrop-blur-sm transition-all duration-300 group-hover:opacity-100 sm:flex">
-          <ArrowUpRight className="h-4 w-4" strokeWidth={1.2} />
+        <div className="absolute bottom-3 right-3 hidden h-8 w-8 items-center justify-center rounded-full bg-[#FFFFFF]/90 opacity-0 backdrop-blur-sm transition-all duration-300 group-hover:opacity-100 sm:flex">
+          <ArrowUpRight className="h-4 w-4 text-[#292722]" strokeWidth={1.2} />
         </div>
       </Link>
 
-      {/* PRODUCT INFO */}
       <div className="flex min-h-[175px] flex-col pt-4 sm:min-h-[185px]">
         <div className="flex items-start justify-between gap-2">
           <div>
-            {/* Category */}
-            <p className="mb-1 font-jost text-[8px] uppercase tracking-[0.2em] text-black/40 sm:text-[9px]">
+            <p className="mb-1 font-inter text-[8px] uppercase tracking-[0.2em] text-[#292722]/45 sm:text-[9px]">
               {product.category}
             </p>
 
-            {/* Name */}
             <Link href={`/products/${product._id}`}>
-              <h3 className="font-jost text-xs font-medium tracking-wide text-black sm:text-sm">
+              <h3 className="font-inter text-xs font-medium tracking-wide text-[#292722] sm:text-sm">
                 {product.name}
               </h3>
             </Link>
           </div>
 
-          {/* Price */}
-          <p className="whitespace-nowrap font-jost text-xs text-black sm:text-sm">
+          <p className="whitespace-nowrap font-inter text-xs text-[#292722] sm:text-sm">
             {product.price.toLocaleString("fr-FR")} DA
           </p>
         </div>
 
-        {/* Description */}
-        <p className="mt-2 min-h-[32px] max-w-[240px] font-jost text-[9px] leading-4 text-black/50 sm:min-h-[40px] sm:text-[10px] sm:leading-4">
+        <p className="mt-2 min-h-[32px] max-w-[240px] font-inter text-[9px] leading-4 text-[#292722]/60 sm:min-h-[40px] sm:text-[10px] sm:leading-4">
           {product.description}
         </p>
 
-        {/* ADD TO CART */}
         <button
           type="button"
           onClick={handleAddToCart}
           disabled={adding || product.stock <= 0}
-          className="mt-auto flex w-full cursor-pointer items-center justify-center gap-2 border border-black bg-black px-3 py-2.5 font-jost text-[8px] uppercase tracking-[0.18em] text-white transition-all duration-300 hover:bg-transparent hover:text-black disabled:cursor-not-allowed disabled:opacity-60 sm:py-3 sm:text-[9px]"
+          className={`mt-auto flex w-full cursor-pointer items-center justify-center gap-2 border px-3 py-2.5 font-inter text-[8px] uppercase tracking-[0.18em] transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-60 sm:py-3 sm:text-[9px] ${
+            added
+              ? "border-[#52745B] bg-[#52745B] text-[#FFFFFF]"
+              : "border-[#292722] bg-[#292722] text-[#FFFFFF] hover:bg-[#1f1d1a]"
+          }`}
         >
           <ShoppingBag className="h-3.5 w-3.5" strokeWidth={1.3} />
 

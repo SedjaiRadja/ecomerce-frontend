@@ -1,7 +1,7 @@
 export default function OrderSuccessPage() {
   return (
     <main>
-      <h1>Order Successful!</h1>
+      <h1 className="font-playfair">Order Successful!</h1>
     </main>
   );
 }

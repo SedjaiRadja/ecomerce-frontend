@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
-.font-jost {
-  font-family: var(--font-jost);
+@theme inline {
+  --font-inter: var(--font-inter-allure);
+  --font-playfair: var(--font-playfair-allure);
+}
+
+body {
+  font-family: var(--font-inter-allure), sans-serif;
 }

@@ -74,7 +74,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
         {/* Back */}
         <Link
           href="/products"
-          className="group mb-8 inline-flex items-center gap-2 font-jost text-[10px] uppercase tracking-[0.2em] text-black"
+          className="group mb-8 inline-flex items-center gap-2 font-inter text-[10px] uppercase tracking-[0.2em] text-black"
         >
           <ArrowLeft
             className="h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1"
@@ -126,7 +126,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
 
               {/* Category */}
               <div className="absolute left-4 top-4">
-                <span className="bg-[#F5F3F0]/90 px-3 py-1.5 font-jost text-[8px] uppercase tracking-[0.2em] text-black backdrop-blur-sm">
+                <span className="bg-[#F5F3F0]/90 px-3 py-1.5 font-inter text-[8px] uppercase tracking-[0.2em] text-black backdrop-blur-sm">
                   {product.category}
                 </span>
               </div>
@@ -137,17 +137,17 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
 
           <div className="flex flex-col justify-center py-2 lg:py-10">
             {/* Category */}
-            <p className="font-jost text-[9px] uppercase tracking-[0.25em] text-black/40">
+            <p className="font-inter text-[9px] uppercase tracking-[0.25em] text-black/40">
               {product.category}
             </p>
 
             {/* Name */}
-            <h1 className="mt-3 max-w-xl font-jost text-3xl font-light uppercase tracking-[0.08em] text-black sm:text-4xl lg:text-5xl">
+            <h1 className="mt-3 max-w-xl font-inter text-3xl font-light uppercase tracking-[0.08em] text-black sm:text-4xl lg:text-5xl">
               {product.name}
             </h1>
 
             {/* Price */}
-            <p className="mt-6 font-jost text-xl tracking-wide text-black sm:text-2xl">
+            <p className="mt-6 font-inter text-xl tracking-wide text-black sm:text-2xl">
               {product.price.toLocaleString("fr-FR")} DA
             </p>
 
@@ -156,11 +156,11 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
 
             {/* Description */}
             <div>
-              <p className="font-jost text-[10px] uppercase tracking-[0.2em] text-black/40">
+              <p className="font-inter text-[10px] uppercase tracking-[0.2em] text-black/40">
                 Description
               </p>
 
-              <p className="mt-3 max-w-lg font-jost text-sm leading-7 text-black/60">
+              <p className="mt-3 max-w-lg font-inter text-sm leading-7 text-black/60">
                 {product.description}
               </p>
             </div>
@@ -173,7 +173,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
                 }`}
               />
 
-              <p className="font-jost text-[9px] uppercase tracking-[0.18em] text-black/50">
+              <p className="font-inter text-[9px] uppercase tracking-[0.18em] text-black/50">
                 {product.stock > 0
                   ? `${product.stock} pièces disponibles`
                   : "Rupture de stock"}
@@ -183,7 +183,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
             {/* Quantity */}
             {product.stock > 0 && (
               <div className="mt-8">
-                <p className="mb-3 font-jost text-[9px] uppercase tracking-[0.2em] text-black/40">
+                <p className="mb-3 font-inter text-[9px] uppercase tracking-[0.2em] text-black/40">
                   Quantité
                 </p>
 
@@ -198,7 +198,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
                     <Minus className="h-3.5 w-3.5" strokeWidth={1.2} />
                   </button>
 
-                  <span className="font-jost text-xs">{quantity}</span>
+                  <span className="font-inter text-xs">{quantity}</span>
 
                   <button
                     type="button"
@@ -232,7 +232,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
     border-black
     bg-black
     px-5
-    font-jost
+    font-inter
     text-[9px]
     uppercase
     tracking-[0.2em]
@@ -284,23 +284,23 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
             {/* Additional information */}
             <div className="mt-10 border-t border-black/10">
               <div className="flex items-center justify-between border-b border-black/10 py-5">
-                <span className="font-jost text-[9px] uppercase tracking-[0.2em] text-black/50">
+                <span className="font-inter text-[9px] uppercase tracking-[0.2em] text-black/50">
                   Livraison
                 </span>
 
-                <span className="font-jost text-[10px] text-black">
+                <span className="font-inter text-[10px] text-black">
                   Livraison disponible
                 </span>
               </div>
 
               <div className="flex items-center justify-between border-b border-black/10 py-5">
-                <span className="font-jost text-[9px] uppercase tracking-[0.2em] text-black/50">
+                <span className="font-inter text-[9px] uppercase tracking-[0.2em] text-black/50">
                   Retours
                 </span>
 
                 <Link
                   href="/contact"
-                  className="group flex items-center gap-1.5 font-jost text-[10px] text-black"
+                  className="group flex items-center gap-1.5 font-inter text-[10px] text-black"
                 >
                   En savoir plus
                   <ArrowUpRight
@@ -311,11 +311,11 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
               </div>
 
               <div className="flex items-center justify-between py-5">
-                <span className="font-jost text-[9px] uppercase tracking-[0.2em] text-black/50">
+                <span className="font-inter text-[9px] uppercase tracking-[0.2em] text-black/50">
                   Catégorie
                 </span>
 
-                <span className="font-jost text-[10px] text-black">
+                <span className="font-inter text-[10px] text-black">
                   {product.category}
                 </span>
               </div>

@@ -20,12 +20,7 @@ type ShippingForm = {
 export default function CheckoutPage() {
   const router = useRouter();
 
-  const {
-    items,
-    totalItems,
-    totalPrice,
-    loading: cartLoading,
-  } = useCart();
+  const { items, totalItems, totalPrice, loading: cartLoading } = useCart();
 
   const [form, setForm] = useState<ShippingForm>({
     firstName: "",
@@ -45,9 +40,7 @@ export default function CheckoutPage() {
    * =========================
    */
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
     setForm((prev) => ({
@@ -62,9 +55,7 @@ export default function CheckoutPage() {
    * =========================
    */
 
-  const handleSubmit = async (
-    e: FormEvent<HTMLFormElement>,
-  ) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     setError(null);
@@ -74,14 +65,7 @@ export default function CheckoutPage() {
       return;
     }
 
-    const {
-      firstName,
-      lastName,
-      street,
-      city,
-      wilaya,
-      phone,
-    } = form;
+    const { firstName, lastName, street, city, wilaya, phone } = form;
 
     if (
       !firstName.trim() ||
@@ -91,9 +75,7 @@ export default function CheckoutPage() {
       !wilaya.trim() ||
       !phone.trim()
     ) {
-      setError(
-        "Veuillez compléter toutes les informations de livraison.",
-      );
+      setError("Veuillez compléter toutes les informations de livraison.");
 
       return;
     }
@@ -125,26 +107,18 @@ export default function CheckoutPage() {
       if (!response.ok) {
         const message = await response.text();
 
-        throw new Error(
-          message || "Impossible de créer votre commande.",
-        );
+        throw new Error(message || "Impossible de créer votre commande.");
       }
 
       const data = await response.json();
 
       console.log("ORDER CREATED:", data.order);
 
-      router.push(
-        `/order-success?id=${data.order._id}`,
-      );
+      router.push(`/order-success?id=${data.order._id}`);
     } catch (err) {
       console.error("Create order error:", err);
 
-      setError(
-        err instanceof Error
-          ? err.message
-          : "Une erreur est survenue.",
-      );
+      setError(err instanceof Error ? err.message : "Une erreur est survenue.");
     } finally {
       setLoading(false);
     }
@@ -161,25 +135,24 @@ export default function CheckoutPage() {
       <main className="min-h-screen bg-[#F5F3F0] px-5 py-8">
         <div className="mx-auto flex min-h-[80vh] max-w-4xl items-center justify-center">
           <div className="text-center">
-            <p className="font-jost text-[9px] uppercase tracking-[0.3em] text-black/40">
+            <p className="font-inter text-[9px] uppercase tracking-[0.3em] text-black/40">
               Votre sélection
             </p>
 
-            <h1 className="mt-4 font-jost text-3xl font-light uppercase tracking-[0.1em] text-black sm:text-4xl">
+            <h1 className="mt-4 font-playfair text-3xl font-light uppercase tracking-[0.1em] text-black sm:text-4xl">
               Votre panier est vide
             </h1>
 
-            <p className="mx-auto mt-5 max-w-sm font-jost text-xs leading-6 text-black/50">
-              Ajoutez au moins un article à votre panier
-              avant de passer votre commande.
+            <p className="mx-auto mt-5 max-w-sm font-inter text-xs leading-6 text-black/50">
+              Ajoutez au moins un article à votre panier avant de passer votre
+              commande.
             </p>
 
             <Link
               href="/products"
-              className="group mt-8 inline-flex items-center gap-3 border border-black bg-black px-7 py-3.5 font-jost text-[9px] uppercase tracking-[0.2em] text-white transition-all duration-300 hover:bg-transparent hover:text-black"
+              className="group mt-8 inline-flex items-center gap-3 border border-black bg-black px-7 py-3.5 font-inter text-[9px] uppercase tracking-[0.2em] text-white transition-all duration-300 hover:bg-transparent hover:text-black"
             >
               Découvrir la collection
-
               <ArrowRight
                 className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1"
                 strokeWidth={1.2}
@@ -194,34 +167,32 @@ export default function CheckoutPage() {
   return (
     <main className="min-h-screen bg-[#F5F3F0] px-4 py-7 sm:px-6 sm:py-10 lg:px-10 lg:py-12">
       <div className="mx-auto max-w-7xl">
-
         {/* ================= HEADER ================= */}
 
         <header className="border-b border-black/10 pb-8">
           <Link
             href="/cart"
-            className="group mb-8 inline-flex items-center gap-2 font-jost text-[9px] uppercase tracking-[0.2em] text-black/50 transition-colors hover:text-black"
+            className="group mb-8 inline-flex items-center gap-2 font-inter text-[9px] uppercase tracking-[0.2em] text-black/50 transition-colors hover:text-black"
           >
             <ArrowLeft
               className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-x-1"
               strokeWidth={1.2}
             />
-
             Retour au panier
           </Link>
 
           <div>
-            <p className="font-jost text-[9px] uppercase tracking-[0.3em] text-black/40">
+            <p className="font-inter text-[9px] uppercase tracking-[0.3em] text-black/40">
               Allure
             </p>
 
-            <h1 className="mt-3 font-jost text-3xl font-light uppercase tracking-[0.1em] text-black sm:text-4xl lg:text-5xl">
+            <h1 className="mt-3 font-playfair text-3xl font-light uppercase tracking-[0.1em] text-black sm:text-4xl lg:text-5xl">
               Finaliser votre commande
             </h1>
 
-            <p className="mt-4 max-w-xl font-jost text-xs leading-6 text-black/50">
-              Quelques informations suffisent pour préparer
-              votre commande et organiser sa livraison.
+            <p className="mt-4 max-w-xl font-inter text-xs leading-6 text-black/50">
+              Quelques informations suffisent pour préparer votre commande et
+              organiser sa livraison.
             </p>
           </div>
         </header>
@@ -232,32 +203,29 @@ export default function CheckoutPage() {
           onSubmit={handleSubmit}
           className="mt-8 grid grid-cols-1 gap-10 lg:grid-cols-[1fr_380px] lg:gap-16"
         >
-
           {/* ================= LEFT ================= */}
 
           <section>
-
             {/* DELIVERY */}
 
             <div>
               <div className="border-b border-black/10 pb-4">
-                <p className="font-jost text-[9px] uppercase tracking-[0.25em] text-black/40">
+                <p className="font-inter text-[9px] uppercase tracking-[0.25em] text-black/40">
                   Étape 01
                 </p>
 
-                <h2 className="mt-2 font-jost text-xl font-light uppercase tracking-[0.08em] text-black">
+                <h2 className="mt-2 font-inter text-xl font-light uppercase tracking-[0.08em] text-black">
                   Informations de livraison
                 </h2>
               </div>
 
               <div className="mt-7 grid grid-cols-1 gap-5 sm:grid-cols-2">
-
                 {/* FIRST NAME */}
 
                 <div>
                   <label
                     htmlFor="firstName"
-                    className="mb-2 block font-jost text-[9px] uppercase tracking-[0.18em] text-black/50"
+                    className="mb-2 block font-inter text-[9px] uppercase tracking-[0.18em] text-black/50"
                   >
                     Prénom
                   </label>
@@ -271,7 +239,7 @@ export default function CheckoutPage() {
                     placeholder="Votre prénom"
                     autoComplete="given-name"
                     required
-                    className="h-12 w-full border border-black/15 bg-transparent px-4 font-jost text-xs text-black outline-none transition-colors placeholder:text-black/30 focus:border-black"
+                    className="h-12 w-full border border-black/15 bg-transparent px-4 font-inter text-xs text-black outline-none transition-colors placeholder:text-black/30 focus:border-black"
                   />
                 </div>
 
@@ -280,7 +248,7 @@ export default function CheckoutPage() {
                 <div>
                   <label
                     htmlFor="lastName"
-                    className="mb-2 block font-jost text-[9px] uppercase tracking-[0.18em] text-black/50"
+                    className="mb-2 block font-inter text-[9px] uppercase tracking-[0.18em] text-black/50"
                   >
                     Nom
                   </label>
@@ -294,7 +262,7 @@ export default function CheckoutPage() {
                     placeholder="Votre nom"
                     autoComplete="family-name"
                     required
-                    className="h-12 w-full border border-black/15 bg-transparent px-4 font-jost text-xs text-black outline-none transition-colors placeholder:text-black/30 focus:border-black"
+                    className="h-12 w-full border border-black/15 bg-transparent px-4 font-inter text-xs text-black outline-none transition-colors placeholder:text-black/30 focus:border-black"
                   />
                 </div>
 
@@ -303,7 +271,7 @@ export default function CheckoutPage() {
                 <div className="sm:col-span-2">
                   <label
                     htmlFor="street"
-                    className="mb-2 block font-jost text-[9px] uppercase tracking-[0.18em] text-black/50"
+                    className="mb-2 block font-inter text-[9px] uppercase tracking-[0.18em] text-black/50"
                   >
                     Adresse
                   </label>
@@ -317,7 +285,7 @@ export default function CheckoutPage() {
                     placeholder="Votre adresse"
                     autoComplete="street-address"
                     required
-                    className="h-12 w-full border border-black/15 bg-transparent px-4 font-jost text-xs text-black outline-none transition-colors placeholder:text-black/30 focus:border-black"
+                    className="h-12 w-full border border-black/15 bg-transparent px-4 font-inter text-xs text-black outline-none transition-colors placeholder:text-black/30 focus:border-black"
                   />
                 </div>
 
@@ -326,7 +294,7 @@ export default function CheckoutPage() {
                 <div>
                   <label
                     htmlFor="city"
-                    className="mb-2 block font-jost text-[9px] uppercase tracking-[0.18em] text-black/50"
+                    className="mb-2 block font-inter text-[9px] uppercase tracking-[0.18em] text-black/50"
                   >
                     Ville
                   </label>
@@ -340,7 +308,7 @@ export default function CheckoutPage() {
                     placeholder="Oran"
                     autoComplete="address-level2"
                     required
-                    className="h-12 w-full border border-black/15 bg-transparent px-4 font-jost text-xs text-black outline-none transition-colors placeholder:text-black/30 focus:border-black"
+                    className="h-12 w-full border border-black/15 bg-transparent px-4 font-inter text-xs text-black outline-none transition-colors placeholder:text-black/30 focus:border-black"
                   />
                 </div>
 
@@ -349,7 +317,7 @@ export default function CheckoutPage() {
                 <div>
                   <label
                     htmlFor="wilaya"
-                    className="mb-2 block font-jost text-[9px] uppercase tracking-[0.18em] text-black/50"
+                    className="mb-2 block font-inter text-[9px] uppercase tracking-[0.18em] text-black/50"
                   >
                     Wilaya
                   </label>
@@ -363,7 +331,7 @@ export default function CheckoutPage() {
                     placeholder="Oran"
                     autoComplete="address-level1"
                     required
-                    className="h-12 w-full border border-black/15 bg-transparent px-4 font-jost text-xs text-black outline-none transition-colors placeholder:text-black/30 focus:border-black"
+                    className="h-12 w-full border border-black/15 bg-transparent px-4 font-inter text-xs text-black outline-none transition-colors placeholder:text-black/30 focus:border-black"
                   />
                 </div>
 
@@ -372,7 +340,7 @@ export default function CheckoutPage() {
                 <div className="sm:col-span-2">
                   <label
                     htmlFor="phone"
-                    className="mb-2 block font-jost text-[9px] uppercase tracking-[0.18em] text-black/50"
+                    className="mb-2 block font-inter text-[9px] uppercase tracking-[0.18em] text-black/50"
                   >
                     Téléphone
                   </label>
@@ -386,10 +354,9 @@ export default function CheckoutPage() {
                     placeholder="05 XX XX XX XX"
                     autoComplete="tel"
                     required
-                    className="h-12 w-full border border-black/15 bg-transparent px-4 font-jost text-xs text-black outline-none transition-colors placeholder:text-black/30 focus:border-black"
+                    className="h-12 w-full border border-black/15 bg-transparent px-4 font-inter text-xs text-black outline-none transition-colors placeholder:text-black/30 focus:border-black"
                   />
                 </div>
-
               </div>
             </div>
 
@@ -397,36 +364,30 @@ export default function CheckoutPage() {
 
             <div className="mt-12">
               <div className="border-b border-black/10 pb-4">
-                <p className="font-jost text-[9px] uppercase tracking-[0.25em] text-black/40">
+                <p className="font-inter text-[9px] uppercase tracking-[0.25em] text-black/40">
                   Étape 02
                 </p>
 
-                <h2 className="mt-2 font-jost text-xl font-light uppercase tracking-[0.08em] text-black">
+                <h2 className="mt-2 font-inter text-xl font-light uppercase tracking-[0.08em] text-black">
                   Mode de paiement
                 </h2>
               </div>
 
               <div className="mt-6 border border-black bg-[#EEECE8] p-5 sm:p-6">
                 <div className="flex items-start gap-4">
-
                   <div className="flex h-5 w-5 shrink-0 items-center justify-center border border-black bg-black">
-                    <Check
-                      className="h-3 w-3 text-white"
-                      strokeWidth={1.5}
-                    />
+                    <Check className="h-3 w-3 text-white" strokeWidth={1.5} />
                   </div>
 
                   <div>
-                    <p className="font-jost text-xs uppercase tracking-[0.08em] text-black">
+                    <p className="font-inter text-xs uppercase tracking-[0.08em] text-black">
                       Paiement à la livraison
                     </p>
 
-                    <p className="mt-2 font-jost text-[10px] leading-5 text-black/50">
-                      Réglez votre commande directement à la
-                      réception.
+                    <p className="mt-2 font-inter text-[10px] leading-5 text-black/50">
+                      Réglez votre commande directement à la réception.
                     </p>
                   </div>
-
                 </div>
               </div>
             </div>
@@ -435,7 +396,7 @@ export default function CheckoutPage() {
 
             {error && (
               <div className="mt-6 border border-black/10 bg-black px-4 py-4">
-                <p className="font-jost text-[9px] uppercase leading-5 tracking-[0.12em] text-white">
+                <p className="font-inter text-[9px] uppercase leading-5 tracking-[0.12em] text-white">
                   {error}
                 </p>
               </div>
@@ -446,7 +407,7 @@ export default function CheckoutPage() {
             <button
               type="submit"
               disabled={loading || cartLoading}
-              className="group mt-8 flex min-h-13 w-full items-center justify-center gap-3 border border-black bg-black px-6 font-jost text-[9px] uppercase tracking-[0.2em] text-white transition-all duration-300 hover:bg-transparent hover:text-black disabled:cursor-not-allowed disabled:opacity-50 lg:hidden"
+              className="group mt-8 flex min-h-13 w-full items-center justify-center gap-3 border border-black bg-black px-6 font-inter text-[9px] uppercase tracking-[0.2em] text-white transition-all duration-300 hover:bg-transparent hover:text-black disabled:cursor-not-allowed disabled:opacity-50 lg:hidden"
             >
               {loading ? (
                 <>
@@ -454,13 +415,11 @@ export default function CheckoutPage() {
                     className="h-3.5 w-3.5 animate-spin"
                     strokeWidth={1.2}
                   />
-
                   Création de la commande...
                 </>
               ) : (
                 <>
                   Confirmer la commande
-
                   <ArrowRight
                     className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1"
                     strokeWidth={1.2}
@@ -468,20 +427,17 @@ export default function CheckoutPage() {
                 </>
               )}
             </button>
-
           </section>
 
           {/* ================= SUMMARY ================= */}
 
           <aside className="lg:sticky lg:top-8 lg:self-start">
-
             <div className="border border-black/10 bg-[#EEECE8] p-5 sm:p-6">
-
-              <p className="font-jost text-[9px] uppercase tracking-[0.25em] text-black/40">
+              <p className="font-inter text-[9px] uppercase tracking-[0.25em] text-black/40">
                 Votre sélection
               </p>
 
-              <h2 className="mt-3 font-jost text-xl font-light uppercase tracking-[0.08em] text-black">
+              <h2 className="mt-3 font-inter text-xl font-light uppercase tracking-[0.08em] text-black">
                 Résumé
               </h2>
 
@@ -498,10 +454,7 @@ export default function CheckoutPage() {
                   const product = item.product;
 
                   return (
-                    <div
-                      key={item._id ?? product._id}
-                      className="flex gap-4"
-                    >
+                    <div key={item._id ?? product._id} className="flex gap-4">
                       <div className="relative h-20 w-16 shrink-0 overflow-hidden bg-[#C8C5C0]">
                         <img
                           src={product.image}
@@ -509,25 +462,25 @@ export default function CheckoutPage() {
                           className="h-full w-full object-cover"
                         />
 
-                        <span className="absolute right-1 top-1 flex h-4 min-w-4 items-center justify-center bg-black px-1 font-jost text-[7px] text-white">
+                        <span className="absolute right-1 top-1 flex h-4 min-w-4 items-center justify-center bg-black px-1 font-inter text-[7px] text-white">
                           {item.quantity}
                         </span>
                       </div>
 
                       <div className="flex min-w-0 flex-1 flex-col justify-center">
-                        <p className="font-jost text-xs text-black">
+                        <p className="font-inter text-xs text-black">
                           {product.name}
                         </p>
 
-                        <p className="mt-1 font-jost text-[9px] uppercase tracking-[0.12em] text-black/40">
+                        <p className="mt-1 font-inter text-[9px] uppercase tracking-[0.12em] text-black/40">
                           {product.price.toLocaleString("fr-FR")} DA
                         </p>
                       </div>
 
-                      <p className="self-center whitespace-nowrap font-jost text-[10px] text-black">
-                        {(
-                          product.price * item.quantity
-                        ).toLocaleString("fr-FR")}{" "}
+                      <p className="self-center whitespace-nowrap font-inter text-[10px] text-black">
+                        {(product.price * item.quantity).toLocaleString(
+                          "fr-FR",
+                        )}{" "}
                         DA
                       </p>
                     </div>
@@ -540,11 +493,11 @@ export default function CheckoutPage() {
               {/* ITEMS */}
 
               <div className="flex items-center justify-between">
-                <span className="font-jost text-[10px] text-black/50">
+                <span className="font-inter text-[10px] text-black/50">
                   Articles
                 </span>
 
-                <span className="font-jost text-[10px] text-black">
+                <span className="font-inter text-[10px] text-black">
                   {totalItems}
                 </span>
               </div>
@@ -552,11 +505,11 @@ export default function CheckoutPage() {
               {/* SUBTOTAL */}
 
               <div className="mt-4 flex items-center justify-between">
-                <span className="font-jost text-[10px] text-black/50">
+                <span className="font-inter text-[10px] text-black/50">
                   Sous-total
                 </span>
 
-                <span className="font-jost text-xs text-black">
+                <span className="font-inter text-xs text-black">
                   {totalPrice.toLocaleString("fr-FR")} DA
                 </span>
               </div>
@@ -564,11 +517,11 @@ export default function CheckoutPage() {
               {/* SHIPPING */}
 
               <div className="mt-4 flex items-center justify-between">
-                <span className="font-jost text-[10px] text-black/50">
+                <span className="font-inter text-[10px] text-black/50">
                   Livraison
                 </span>
 
-                <span className="font-jost text-[10px] text-black">
+                <span className="font-inter text-[10px] text-black">
                   À confirmer
                 </span>
               </div>
@@ -578,11 +531,11 @@ export default function CheckoutPage() {
               {/* TOTAL */}
 
               <div className="flex items-end justify-between">
-                <span className="font-jost text-[10px] uppercase tracking-[0.15em] text-black">
+                <span className="font-inter text-[10px] uppercase tracking-[0.15em] text-black">
                   Total
                 </span>
 
-                <span className="font-jost text-xl font-light text-black">
+                <span className="font-inter text-xl font-light text-black">
                   {totalPrice.toLocaleString("fr-FR")} DA
                 </span>
               </div>
@@ -592,7 +545,7 @@ export default function CheckoutPage() {
               <button
                 type="submit"
                 disabled={loading || cartLoading}
-                className="group mt-7 hidden min-h-13 w-full items-center justify-center gap-3 border border-black bg-black px-5 font-jost text-[9px] uppercase tracking-[0.2em] text-white transition-all duration-300 hover:bg-transparent hover:text-black disabled:cursor-not-allowed disabled:opacity-50 lg:flex"
+                className="group mt-7 hidden min-h-13 w-full items-center justify-center gap-3 border border-black bg-black px-5 font-inter text-[9px] uppercase tracking-[0.2em] text-white transition-all duration-300 hover:bg-transparent hover:text-black disabled:cursor-not-allowed disabled:opacity-50 lg:flex"
               >
                 {loading ? (
                   <>
@@ -600,13 +553,11 @@ export default function CheckoutPage() {
                       className="h-3.5 w-3.5 animate-spin"
                       strokeWidth={1.2}
                     />
-
                     Création...
                   </>
                 ) : (
                   <>
                     Confirmer la commande
-
                     <ArrowRight
                       className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1"
                       strokeWidth={1.2}
@@ -615,7 +566,7 @@ export default function CheckoutPage() {
                 )}
               </button>
 
-              <p className="mt-4 text-center font-jost text-[8px] leading-4 text-black/40">
+              <p className="mt-4 text-center font-inter text-[8px] leading-4 text-black/40">
                 Paiement à la livraison · Commande sécurisée
               </p>
             </div>
@@ -624,28 +575,26 @@ export default function CheckoutPage() {
 
             <div className="mt-6 border-t border-black/10 pt-5">
               <div className="flex items-center justify-between">
-                <span className="font-jost text-[9px] uppercase tracking-[0.15em] text-black/40">
+                <span className="font-inter text-[9px] uppercase tracking-[0.15em] text-black/40">
                   Livraison
                 </span>
 
-                <span className="font-jost text-[9px] text-black">
+                <span className="font-inter text-[9px] text-black">
                   Disponible
                 </span>
               </div>
 
               <div className="mt-4 flex items-center justify-between">
-                <span className="font-jost text-[9px] uppercase tracking-[0.15em] text-black/40">
+                <span className="font-inter text-[9px] uppercase tracking-[0.15em] text-black/40">
                   Paiement
                 </span>
 
-                <span className="font-jost text-[9px] text-black">
+                <span className="font-inter text-[9px] text-black">
                   À la livraison
                 </span>
               </div>
             </div>
-
           </aside>
-
         </form>
       </div>
     </main>

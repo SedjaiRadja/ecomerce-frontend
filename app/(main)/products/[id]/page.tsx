@@ -40,17 +40,17 @@ export default async function ProductPage({ params }: ProductPageProps) {
   if (!product) {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center bg-[#F5F3F0] px-4 text-center">
-        <p className="font-jost text-[9px] uppercase tracking-[0.25em] text-black/40">
+        <p className="font-inter text-[9px] uppercase tracking-[0.25em] text-black/40">
           Produit introuvable
         </p>
 
-        <h1 className="mt-4 font-jost text-2xl font-light uppercase tracking-[0.1em] text-black">
+        <h1 className="mt-4 font-playfair text-2xl font-light uppercase tracking-[0.1em] text-black">
           Ce produit n&apos;existe pas
         </h1>
 
         <Link
           href="/products"
-          className="mt-8 border border-black bg-black px-6 py-3 font-jost text-[9px] uppercase tracking-[0.2em] text-white transition-all duration-300 hover:bg-transparent hover:text-black"
+          className="mt-8 border border-black bg-black px-6 py-3 font-inter text-[9px] uppercase tracking-[0.2em] text-white transition-all duration-300 hover:bg-transparent hover:text-black"
         >
           Retour à la collection
         </Link>

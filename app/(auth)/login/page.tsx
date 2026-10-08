@@ -62,18 +62,18 @@ export default function LoginPage() {
         <div className="hidden min-h-screen flex-col justify-between bg-[#C8C5C0] px-12 py-14 lg:flex xl:px-20">
           {/* Decorative text */}
           <div>
-            <p className="font-jost text-[11px] uppercase tracking-[0.35em] text-black/40">
+            <p className="font-inter text-[11px] uppercase tracking-[0.35em] text-black/40">
               Elegance · Simplicity · Allure
             </p>
           </div>
 
           <div>
             <div>
-              <p className="font-jost text-[11px] uppercase tracking-[0.35em] text-black/40">
+              <p className="font-inter text-[11px] uppercase tracking-[0.35em] text-black/40">
                 Bienvenue dans
               </p>
 
-              <h1 className="mt-8 font-jost text-7xl font-light uppercase leading-none tracking-[0.08em] xl:text-8xl">
+              <h1 className="mt-8 font-playfair text-7xl font-light uppercase leading-none tracking-[0.08em] xl:text-8xl">
                 ALLURE
               </h1>
 
@@ -81,20 +81,20 @@ export default function LoginPage() {
             </div>
 
             <div className="mt-20 max-w-md">
-              <p className="font-jost text-lg font-light leading-8 text-black/55 xl:text-xl">
+              <p className="font-inter text-lg font-light leading-8 text-black/55 xl:text-xl">
                 Votre espace personnel pour retrouver vos commandes, découvrir
                 vos pièces favorites et profiter pleinement de l&apos;univers
                 ALLURE.
               </p>
 
-              <p className="mt-8 font-jost text-[11px] uppercase tracking-[0.25em] text-black/30">
+              <p className="mt-8 font-inter text-[11px] uppercase tracking-[0.25em] text-black/30">
                 Votre style. Votre espace.
               </p>
             </div>
           </div>
 
           <div>
-            <p className="font-jost text-[10px] uppercase tracking-[0.25em] text-black/30">
+            <p className="font-inter text-[10px] uppercase tracking-[0.25em] text-black/30">
               © {new Date().getFullYear()} ALLURE
             </p>
           </div>
@@ -104,22 +104,22 @@ export default function LoginPage() {
         <div className="flex min-h-screen flex-col justify-center bg-[#E8E5E0] px-7 py-14 sm:px-12 lg:px-16 xl:px-24">
           {/* Mobile logo */}
           <div className="mb-14 lg:hidden">
-            <p className="font-jost text-3xl font-light uppercase tracking-[0.15em] text-black">
+            <p className="font-inter text-3xl font-light uppercase tracking-[0.15em] text-black">
               ALLURE
             </p>
           </div>
 
           {/* Header */}
           <div className="mb-12">
-            <p className="mb-5 font-jost text-[11px] uppercase tracking-[0.35em] text-black/40">
+            <p className="mb-5 font-inter text-[11px] uppercase tracking-[0.35em] text-black/40">
               Espace client
             </p>
 
-            <h2 className="font-jost text-4xl font-light uppercase leading-tight tracking-[0.06em] text-black sm:text-5xl">
+            <h2 className="font-playfair text-4xl font-light uppercase leading-tight tracking-[0.06em] text-black sm:text-5xl">
               Connexion
             </h2>
 
-            <p className="mt-5 max-w-md font-jost text-base leading-7 text-black/50">
+            <p className="mt-5 max-w-md font-inter text-base leading-7 text-black/50">
               Connectez-vous à votre compte pour accéder à votre espace
               personnel.
             </p>
@@ -131,7 +131,7 @@ export default function LoginPage() {
             <div>
               <label
                 htmlFor="email"
-                className="mb-4 block font-jost text-[11px] uppercase tracking-[0.25em] text-black/50"
+                className="mb-4 block font-inter text-[11px] uppercase tracking-[0.25em] text-black/50"
               >
                 Adresse e-mail
               </label>
@@ -145,7 +145,7 @@ export default function LoginPage() {
                 placeholder="votre@email.com"
                 autoComplete="email"
                 required
-                className="w-full border-0 border-b border-black/20 bg-transparent px-0 py-4 font-jost text-base text-black placeholder:text-black/25 outline-none transition-all duration-300 focus:border-black"
+                className="w-full border-0 border-b border-black/20 bg-transparent px-0 py-4 font-inter text-base text-black placeholder:text-black/25 outline-none transition-all duration-300 focus:border-black"
               />
             </div>
 
@@ -154,14 +154,14 @@ export default function LoginPage() {
               <div className="mb-4 flex items-center justify-between gap-4">
                 <label
                   htmlFor="password"
-                  className="font-jost text-[11px] uppercase tracking-[0.25em] text-black/50"
+                  className="font-inter text-[11px] uppercase tracking-[0.25em] text-black/50"
                 >
                   Mot de passe
                 </label>
 
                 <Link
                   href="#"
-                  className="font-jost text-[10px] uppercase tracking-[0.18em] text-black/40 transition-colors hover:text-black"
+                  className="font-inter text-[10px] uppercase tracking-[0.18em] text-black/40 transition-colors hover:text-black"
                 >
                   Mot de passe oublié ?
                 </Link>
@@ -176,7 +176,7 @@ export default function LoginPage() {
                 placeholder="••••••••"
                 autoComplete="current-password"
                 required
-                className="w-full border-0 border-b border-black/20 bg-transparent px-0 py-4 font-jost text-base text-black placeholder:text-black/25 outline-none transition-all duration-300 focus:border-black"
+                className="w-full border-0 border-b border-black/20 bg-transparent px-0 py-4 font-inter text-base text-black placeholder:text-black/25 outline-none transition-all duration-300 focus:border-black"
               />
             </div>
 
@@ -191,7 +191,7 @@ export default function LoginPage() {
 
               <label
                 htmlFor="remember"
-                className="cursor-pointer font-jost text-[11px] uppercase tracking-[0.15em] text-black/45"
+                className="cursor-pointer font-inter text-[11px] uppercase tracking-[0.15em] text-black/45"
               >
                 Se souvenir de moi
               </label>
@@ -200,7 +200,7 @@ export default function LoginPage() {
             {/* Error */}
             {error && (
               <div className="border border-red-900/15 bg-red-900/5 px-4 py-3">
-                <p className="font-jost text-sm text-red-700">{error}</p>
+                <p className="font-inter text-sm text-red-700">{error}</p>
               </div>
             )}
 
@@ -208,7 +208,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="group mt-2 flex w-full items-center justify-center gap-8 bg-black px-8 py-5 font-jost text-[11px] uppercase tracking-[0.3em] text-white transition-all duration-300 hover:bg-black/80 disabled:cursor-not-allowed disabled:opacity-50"
+              className="group mt-2 flex w-full items-center justify-center gap-8 bg-black px-8 py-5 font-inter text-[11px] uppercase tracking-[0.3em] text-white transition-all duration-300 hover:bg-black/80 disabled:cursor-not-allowed disabled:opacity-50"
             >
               <span>{loading ? "Connexion..." : "Se connecter"}</span>
 
@@ -223,13 +223,13 @@ export default function LoginPage() {
             {/* Register */}
             <div className="mt-12 border-t border-black/10 pt-9">
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                <p className="font-jost text-[11px] uppercase tracking-[0.15em] text-black/40">
+                <p className="font-inter text-[11px] uppercase tracking-[0.15em] text-black/40">
                   Vous n&apos;avez pas encore de compte ?
                 </p>
 
                 <Link
                   href="/register"
-                  className="font-jost text-xs uppercase tracking-[0.2em] text-black underline underline-offset-8 transition-opacity hover:opacity-50"
+                  className="font-inter text-xs uppercase tracking-[0.2em] text-black underline underline-offset-8 transition-opacity hover:opacity-50"
                 >
                   Créer un compte
                 </Link>

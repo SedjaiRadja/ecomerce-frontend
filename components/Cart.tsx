@@ -193,7 +193,7 @@ export default function Cart() {
     return (
       <section className="min-h-[70vh] px-5 py-16 sm:px-8 lg:px-16">
         <div className="flex min-h-[400px] items-center justify-center">
-          <p className="font-jost text-[10px] uppercase tracking-[0.25em] text-black/40">
+          <p className="font-inter text-[10px] uppercase tracking-[0.25em] text-black/40">
             Chargement du panier...
           </p>
         </div>
@@ -213,22 +213,22 @@ export default function Cart() {
               strokeWidth={1}
             />
 
-            <p className="mt-6 font-jost text-[10px] uppercase tracking-[0.3em] text-black/40">
+            <p className="mt-6 font-inter text-[10px] uppercase tracking-[0.3em] text-black/40">
               Votre panier
             </p>
 
-            <h1 className="mt-3 font-jost text-3xl font-light uppercase tracking-[0.12em] text-black sm:text-4xl">
+            <h1 className="mt-3 font-playfair text-3xl font-light uppercase tracking-[0.12em] text-black sm:text-4xl">
               Votre panier est vide
             </h1>
 
-            <p className="mx-auto mt-4 max-w-md font-jost text-xs leading-5 text-black/50 sm:text-sm">
+            <p className="mx-auto mt-4 max-w-md font-inter text-xs leading-5 text-black/50 sm:text-sm">
               Découvrez notre sélection et trouvez les pièces qui correspondent
               à votre style.
             </p>
 
             <Link
               href="/products"
-              className="mt-8 inline-flex items-center gap-3 bg-black px-6 py-3 font-jost text-[9px] uppercase tracking-[0.2em] text-white transition-colors duration-300 hover:bg-black/80"
+              className="mt-8 inline-flex items-center gap-3 bg-black px-6 py-3 font-inter text-[9px] uppercase tracking-[0.2em] text-white transition-colors duration-300 hover:bg-black/80"
             >
               Découvrir la collection
               <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.3} />
@@ -248,11 +248,11 @@ export default function Cart() {
 
         <header className="flex items-end justify-between border-b border-black/10 pb-6">
           <div>
-            <p className="font-jost text-[10px] uppercase tracking-[0.3em] text-black/40 sm:text-[11px]">
+            <p className="font-inter text-[10px] uppercase tracking-[0.3em] text-black/40 sm:text-[11px]">
               Votre sélection
             </p>
 
-            <h1 className="mt-3 font-jost text-3xl font-light uppercase tracking-[0.12em] text-black sm:text-4xl lg:text-5xl">
+            <h1 className="mt-3 font-playfair text-3xl font-light uppercase tracking-[0.12em] text-black sm:text-4xl lg:text-5xl">
               Mon panier
             </h1>
           </div>
@@ -261,7 +261,7 @@ export default function Cart() {
             type="button"
             onClick={clearCart}
             disabled={clearing}
-            className="hidden border-b border-black/30 pb-1 font-jost text-[9px] uppercase tracking-[0.18em] text-black/50 transition-colors hover:border-black hover:text-black sm:block disabled:cursor-not-allowed disabled:opacity-40"
+            className="hidden border-b border-black/30 pb-1 font-inter text-[9px] uppercase tracking-[0.18em] text-black/50 transition-colors hover:border-black hover:text-black sm:block disabled:cursor-not-allowed disabled:opacity-40"
           >
             {clearing ? "Suppression..." : "Vider le panier"}
           </button>
@@ -272,7 +272,7 @@ export default function Cart() {
 
           <div>
             <div className="mb-5 flex items-center justify-between">
-              <p className="font-jost text-[9px] uppercase tracking-[0.2em] text-black/40">
+              <p className="font-inter text-[9px] uppercase tracking-[0.2em] text-black/40">
                 {cart.items.length}{" "}
                 {cart.items.length > 1 ? "articles" : "article"}
               </p>
@@ -281,7 +281,7 @@ export default function Cart() {
                 type="button"
                 onClick={clearCart}
                 disabled={clearing}
-                className="font-jost text-[9px] uppercase tracking-[0.18em] text-black/40 hover:text-black sm:hidden disabled:opacity-40"
+                className="font-inter text-[9px] uppercase tracking-[0.18em] text-black/40 hover:text-black sm:hidden disabled:opacity-40"
               >
                 Vider
               </button>
@@ -315,18 +315,18 @@ export default function Cart() {
                     <div className="flex min-w-0 flex-1 flex-col">
                       <div className="flex items-start justify-between gap-3">
                         <div>
-                          <p className="font-jost text-[8px] uppercase tracking-[0.2em] text-black/40">
+                          <p className="font-inter text-[8px] uppercase tracking-[0.2em] text-black/40">
                             {product.category}
                           </p>
 
                           <Link href={`/products/${product._id}`}>
-                            <h2 className="mt-1 font-jost text-sm font-medium tracking-wide text-black sm:text-base">
+                            <h2 className="mt-1 font-inter text-sm font-medium tracking-wide text-black sm:text-base">
                               {product.name}
                             </h2>
                           </Link>
                         </div>
 
-                        <p className="whitespace-nowrap font-jost text-xs text-black sm:text-sm">
+                        <p className="whitespace-nowrap font-inter text-xs text-black sm:text-sm">
                           {(product.price * item.quantity).toLocaleString(
                             "fr-FR",
                           )}{" "}
@@ -334,7 +334,7 @@ export default function Cart() {
                         </p>
                       </div>
 
-                      <p className="mt-2 hidden max-w-md font-jost text-[10px] leading-4 text-black/40 sm:block">
+                      <p className="mt-2 hidden max-w-md font-inter text-[10px] leading-4 text-black/40 sm:block">
                         {product.description}
                       </p>
 
@@ -353,7 +353,7 @@ export default function Cart() {
                             <Minus className="h-3 w-3" strokeWidth={1.3} />
                           </button>
 
-                          <span className="flex h-8 min-w-8 items-center justify-center border-x border-black/15 font-jost text-[10px]">
+                          <span className="flex h-8 min-w-8 items-center justify-center border-x border-black/15 font-inter text-[10px]">
                             {isUpdating ? "..." : item.quantity}
                           </span>
 
@@ -377,7 +377,7 @@ export default function Cart() {
                           type="button"
                           disabled={isRemoving}
                           onClick={() => removeProduct(product._id)}
-                          className="flex items-center gap-1.5 font-jost text-[8px] uppercase tracking-[0.15em] text-black/40 transition-colors hover:text-black disabled:opacity-40"
+                          className="flex items-center gap-1.5 font-inter text-[8px] uppercase tracking-[0.15em] text-black/40 transition-colors hover:text-black disabled:opacity-40"
                         >
                           <Trash2 className="h-3 w-3" strokeWidth={1.2} />
 
@@ -394,55 +394,55 @@ export default function Cart() {
           {/* SUMMARY */}
 
           <aside className="h-fit border border-black/10 bg-[#F5F3F0] p-5 sm:p-6 lg:sticky lg:top-24">
-            <p className="font-jost text-[9px] uppercase tracking-[0.25em] text-black/40">
+            <p className="font-inter text-[9px] uppercase tracking-[0.25em] text-black/40">
               Résumé
             </p>
 
-            <h2 className="mt-3 font-jost text-xl font-light uppercase tracking-[0.1em]">
+            <h2 className="mt-3 font-inter text-xl font-light uppercase tracking-[0.1em]">
               Total de la commande
             </h2>
 
             <div className="mt-7 space-y-4 border-b border-black/10 pb-6">
               <div className="flex items-center justify-between">
-                <span className="font-jost text-[10px] uppercase tracking-[0.12em] text-black/50">
+                <span className="font-inter text-[10px] uppercase tracking-[0.12em] text-black/50">
                   Sous-total
                 </span>
 
-                <span className="font-jost text-xs">
+                <span className="font-inter text-xs">
                   {subtotal.toLocaleString("fr-FR")} DA
                 </span>
               </div>
 
               <div className="flex items-center justify-between">
-                <span className="font-jost text-[10px] uppercase tracking-[0.12em] text-black/50">
+                <span className="font-inter text-[10px] uppercase tracking-[0.12em] text-black/50">
                   Livraison
                 </span>
 
-                <span className="font-jost text-xs">
+                <span className="font-inter text-xs">
                   {shipping.toLocaleString("fr-FR")} DA
                 </span>
               </div>
             </div>
 
             <div className="flex items-center justify-between py-6">
-              <span className="font-jost text-[10px] uppercase tracking-[0.15em] text-black">
+              <span className="font-inter text-[10px] uppercase tracking-[0.15em] text-black">
                 Total
               </span>
 
-              <span className="font-jost text-base">
+              <span className="font-inter text-base">
                 {total.toLocaleString("fr-FR")} DA
               </span>
             </div>
 
             <button
               type="button"
-              className="flex w-full items-center justify-center gap-3 bg-black px-5 py-3.5 font-jost text-[9px] uppercase tracking-[0.2em] text-white transition-colors duration-300 hover:bg-black/80"
+              className="flex w-full items-center justify-center gap-3 bg-black px-5 py-3.5 font-inter text-[9px] uppercase tracking-[0.2em] text-white transition-colors duration-300 hover:bg-black/80"
             >
               Passer la commande
               <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.3} />
             </button>
 
-            <p className="mt-4 text-center font-jost text-[8px] leading-4 text-black/40">
+            <p className="mt-4 text-center font-inter text-[8px] leading-4 text-black/40">
               Les frais de livraison sont calculés selon votre adresse lors de
               la commande.
             </p>

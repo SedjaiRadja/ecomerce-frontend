@@ -124,7 +124,7 @@ export default function ProductCollection() {
     return (
       <section className="w-full">
         <div className="flex min-h-[400px] items-center justify-center">
-          <p className="font-jost text-[10px] uppercase tracking-[0.2em] text-black/40">
+          <p className="font-inter text-[10px] uppercase tracking-[0.2em] text-black/40">
             Chargement des produits...
           </p>
         </div>
@@ -137,15 +137,15 @@ export default function ProductCollection() {
       {/* ================= HEADER ================= */}
 
       <header>
-        <p className="font-jost text-[10px] uppercase tracking-[0.3em] text-black/40 sm:text-[11px]">
+        <p className="font-inter text-[10px] uppercase tracking-[0.3em] text-black/40 sm:text-[11px]">
           La collection
         </p>
 
-        <h1 className="mt-3 font-jost text-3xl font-light uppercase tracking-[0.12em] text-black sm:text-4xl lg:text-5xl">
+        <h1 className="mt-3 font-playfair text-3xl font-light uppercase tracking-[0.12em] text-black sm:text-4xl lg:text-5xl">
           Nos pièces
         </h1>
 
-        <p className="mt-4 max-w-lg font-jost text-xs leading-5 text-black/50 sm:text-sm">
+        <p className="mt-4 max-w-lg font-inter text-xs leading-5 text-black/50 sm:text-sm">
           Découvrez notre sélection de pièces pensées pour accompagner votre
           style avec élégance et simplicité.
         </p>
@@ -162,7 +162,7 @@ export default function ProductCollection() {
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className="cursor-pointer border border-black/15 bg-transparent px-3 py-2 font-jost text-[10px] uppercase tracking-[0.12em] text-black outline-none transition-colors hover:border-black/40 lg:text-[15px] lg:tracking-[0.05em]"
+            className="cursor-pointer border border-black/15 bg-transparent px-3 py-2 font-inter text-[10px] uppercase tracking-[0.12em] text-black outline-none transition-colors hover:border-black/40 lg:text-[15px] lg:tracking-[0.05em]"
           >
             <option value="Toutes">Toutes les catégories</option>
 
@@ -176,7 +176,7 @@ export default function ProductCollection() {
           <select
             value={availability}
             onChange={(e) => setAvailability(e.target.value)}
-            className="cursor-pointer border border-black/15 bg-transparent px-3 py-2 font-jost text-[10px] uppercase tracking-[0.12em] text-black outline-none transition-colors hover:border-black/40 lg:text-[15px] lg:tracking-[0.05em]"
+            className="cursor-pointer border border-black/15 bg-transparent px-3 py-2 font-inter text-[10px] uppercase tracking-[0.12em] text-black outline-none transition-colors hover:border-black/40 lg:text-[15px] lg:tracking-[0.05em]"
           >
             <option value="Toutes">Disponibilité</option>
 
@@ -190,7 +190,7 @@ export default function ProductCollection() {
           <select
             value={priceRange}
             onChange={(e) => setPriceRange(e.target.value)}
-            className="cursor-pointer border border-black/15 bg-transparent px-3 py-2 font-jost text-[10px] uppercase tracking-[0.12em] text-black outline-none transition-colors hover:border-black/40 lg:text-[15px] lg:tracking-[0.05em]"
+            className="cursor-pointer border border-black/15 bg-transparent px-3 py-2 font-inter text-[10px] uppercase tracking-[0.12em] text-black outline-none transition-colors hover:border-black/40 lg:text-[15px] lg:tracking-[0.05em]"
           >
             <option value="Tous">Prix</option>
 
@@ -206,7 +206,7 @@ export default function ProductCollection() {
           <button
             type="button"
             onClick={resetFilters}
-            className="border-b border-black/40 px-1 py-2 font-jost text-[10px] uppercase tracking-[0.12em] text-black/60 transition-colors hover:border-black hover:text-black lg:text-[15px] lg:tracking-[0.05em]"
+            className="border-b border-black/40 px-1 py-2 font-inter text-[10px] uppercase tracking-[0.12em] text-black/60 transition-colors hover:border-black hover:text-black lg:text-[15px] lg:tracking-[0.05em]"
           >
             Réinitialiser
           </button>
@@ -215,14 +215,14 @@ export default function ProductCollection() {
         {/* Sorting */}
 
         <div className="flex items-center gap-3">
-          <span className="font-jost text-[10px] uppercase tracking-[0.12em] text-black/40 lg:text-[15px] lg:tracking-[0.05em]">
+          <span className="font-inter text-[10px] uppercase tracking-[0.12em] text-black/40 lg:text-[15px] lg:tracking-[0.05em]">
             Trier par
           </span>
 
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
-            className="cursor-pointer border-none bg-transparent font-jost text-[10px] uppercase tracking-[0.12em] text-black outline-none lg:text-[15px] lg:tracking-[0.05em]"
+            className="cursor-pointer border-none bg-transparent font-inter text-[10px] uppercase tracking-[0.12em] text-black outline-none lg:text-[15px] lg:tracking-[0.05em]"
           >
             <option value="recent">Nouveautés</option>
 
@@ -238,7 +238,7 @@ export default function ProductCollection() {
       {/* ================= RESULTS COUNT ================= */}
 
       <div className="mt-8 flex items-center justify-between">
-        <p className="font-jost text-[9px] uppercase tracking-[0.2em] text-black/40 lg:text-[13px]">
+        <p className="font-inter text-[9px] uppercase tracking-[0.2em] text-black/40 lg:text-[13px]">
           {filteredProducts.length}{" "}
           {filteredProducts.length > 1 ? "produits" : "produit"}
         </p>
@@ -271,14 +271,14 @@ export default function ProductCollection() {
 
         <div className="flex min-h-[300px] items-center justify-center">
           <div className="text-center">
-            <p className="font-jost text-sm uppercase tracking-[0.15em] text-black">
+            <p className="font-inter text-sm uppercase tracking-[0.15em] text-black">
               Aucun produit trouvé
             </p>
 
             <button
               type="button"
               onClick={resetFilters}
-              className="mt-4 border-b border-black pb-1 font-jost text-[9px] uppercase tracking-[0.2em]"
+              className="mt-4 border-b border-black pb-1 font-inter text-[9px] uppercase tracking-[0.2em]"
             >
               Réinitialiser les filtres
             </button>

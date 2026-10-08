@@ -3,8 +3,16 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import { Search, Heart, User, ShoppingBag } from "lucide-react";
+import {
+  Search,
+  Heart,
+  User,
+  ShoppingBag,
+  Menu,
+  X,
+} from "lucide-react";
 import type { CartUpdatedDetail } from "@/components/CartProvider";
 
 const NAV_LINKS = [
@@ -16,10 +24,12 @@ const NAV_LINKS = [
 ] as const;
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [cartCount, setCartCount] = useState(0);
 
-  // Get cart count from backend
+  const isHomePage = pathname === "/";
+
   const refreshCartCount = useCallback(async () => {
     try {
       const response = await fetch(
@@ -44,7 +54,6 @@ export default function Navbar() {
     }
   }, []);
 
-  // Load the initial count, then use mutation event payloads for updates.
   useEffect(() => {
     const handleCartUpdate = (event: Event) => {
       const customEvent = event as CustomEvent<CartUpdatedDetail>;
@@ -63,99 +72,185 @@ export default function Navbar() {
     };
   }, [refreshCartCount]);
 
+  const textColor = isHomePage ? "text-[#292722]" : "text-black";
+
+  const mutedTextColor = isHomePage
+    ? "text-[#292722]/70 hover:text-[#292722]"
+    : "text-black/70 hover:text-black";
+
   return (
-    <header className="relative z-50 bg-[#C8C5C0]">
-      <nav className="flex h-20 items-center justify-between px-6 md:px-10 lg:px-16">
+    <header
+      className={`relative z-50 border-b ${
+        isHomePage
+          ? "border-[#E8E2D9] bg-[#F8F6F2]"
+          : "border-black/10 bg-[#C8C5C0]"
+      }`}
+    >
+      {/* Desktop Navbar */}
+      <nav className="hidden h-20 items-center gap-6 px-6 md:flex lg:px-10 xl:px-14">
         {/* Logo */}
-        <Link href="/" className="shrink-0">
+        <Link
+          href="/"
+          className="shrink-0 transition-opacity hover:opacity-75"
+        >
           <Image
             src="/logo.png"
             alt="Allure"
             width={140}
             height={50}
             priority
-            className="h-auto w-[80px] object-contain md:w-[90px]"
+            className="h-auto w-[82px] object-contain lg:w-[90px]"
           />
         </Link>
 
-        {/* Desktop Navigation */}
-        <ul className="hidden items-center gap-8 font-jost md:flex">
-          {NAV_LINKS.map((l) => (
-            <li key={l.href}>
+        {/* Navigation Links */}
+        <ul className="ml-4 flex shrink-0 items-center gap-5 font-inter lg:gap-7">
+          {NAV_LINKS.map((link) => (
+            <li key={link.href}>
               <Link
-                href={l.href}
-                className="text-body text-black transition-colors hover:text-black/60"
+                href={link.href}
+                className={`whitespace-nowrap text-[13px] font-medium transition-colors ${mutedTextColor}`}
               >
-                {l.label}
+                {link.label}
               </Link>
             </li>
           ))}
         </ul>
 
-        {/* Desktop Actions */}
-        <div className="hidden items-center gap-5 md:flex">
-          {/* Recherche */}
-          <Link
-            href="/search"
-            aria-label="Recherche"
-            className="text-dark-900 transition-colors hover:text-dark-700"
-          >
-            <Search className="h-5 w-5" strokeWidth={1.5} />
-          </Link>
+        {/* Search */}
+        <Link
+          href="/search"
+          aria-label="Rechercher"
+          className={`mx-auto flex h-11 min-w-[220px] max-w-[340px] flex-1 items-center gap-3 rounded-full border px-4 transition-all hover:shadow-sm ${
+            isHomePage
+              ? "border-[#E8E2D9] bg-white hover:border-[#B49A78]/50"
+              : "border-black/10 bg-white/70 hover:bg-white"
+          }`}
+        >
+          <Search
+            className="h-[18px] w-[18px] shrink-0 text-[#292722]/60"
+            strokeWidth={1.6}
+          />
 
-          {/* Liste de souhaits */}
+          <span className="font-inter text-sm text-[#292722]/55">
+            Rechercher un produit
+          </span>
+        </Link>
+
+        {/* Right Actions */}
+        <div className="flex shrink-0 items-center gap-2">
+          {/* Wishlist */}
           <Link
             href="/wishlist"
             aria-label="Liste de souhaits"
-            className="text-dark-900 transition-colors hover:text-dark-700"
+            className={`flex h-10 w-10 items-center justify-center rounded-full transition-colors ${
+              isHomePage
+                ? "hover:bg-white"
+                : "hover:bg-white/50"
+            } ${textColor}`}
           >
-            <Heart className="h-5 w-5" strokeWidth={1.5} />
+            <Heart className="h-[19px] w-[19px]" strokeWidth={1.5} />
           </Link>
 
-          {/* Connexion */}
+          {/* Login */}
           <Link
             href="/login"
             aria-label="Connexion"
-            className="text-dark-900 transition-colors hover:text-dark-700"
+            className={`flex h-10 w-10 items-center justify-center rounded-full transition-colors ${
+              isHomePage
+                ? "hover:bg-white"
+                : "hover:bg-white/50"
+            } ${textColor}`}
           >
-            <User className="h-5 w-5" strokeWidth={1.5} />
+            <User className="h-[19px] w-[19px]" strokeWidth={1.5} />
           </Link>
 
-          {/* Panier */}
+          {/* Cart */}
           <Link
             href="/cart"
             aria-label={`Panier, ${cartCount} articles`}
-            className="relative text-dark-900 transition-colors hover:text-dark-700"
+            className={`relative flex h-10 w-10 items-center justify-center rounded-full transition-colors ${
+              isHomePage
+                ? "hover:bg-white"
+                : "hover:bg-white/50"
+            } ${textColor}`}
           >
-            <ShoppingBag className="h-5 w-5" strokeWidth={1.5} />
+            <ShoppingBag
+              className="h-[19px] w-[19px]"
+              strokeWidth={1.5}
+            />
 
-            {/* Cart count badge */}
             {cartCount > 0 && (
-              <span className="absolute -right-2 -top-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-dark-900 px-1 text-[10px] leading-none text-white">
+              <span className="absolute right-0.5 top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#292722] px-1 font-inter text-[9px] font-medium leading-none text-white">
                 {cartCount > 99 ? "99+" : cartCount}
               </span>
             )}
           </Link>
         </div>
+      </nav>
 
-        {/* Mobile Menu Button */}
-        <button
-          type="button"
-          className="relative z-50 inline-flex items-center justify-center rounded-md p-2 md:hidden"
-          aria-controls="mobile-menu"
-          aria-expanded={open}
-          aria-label="Toggle navigation"
-          onClick={() => setOpen((v) => !v)}
+      {/* Mobile Navbar */}
+      <nav className="flex h-20 items-center justify-between px-5 md:hidden">
+        {/* Logo */}
+        <Link
+          href="/"
+          className="shrink-0"
+          onClick={() => setOpen(false)}
         >
-          <span className="sr-only">Toggle navigation</span>
+          <Image
+            src="/logo.png"
+            alt="Allure"
+            width={140}
+            height={50}
+            priority
+            className="h-auto w-[78px] object-contain"
+          />
+        </Link>
 
-          {/* Hamburger */}
-          <span className="flex flex-col gap-1">
-            <span className="block h-0.5 w-6 bg-black" />
-            <span className="block h-0.5 w-6 bg-black" />
-            <span className="block h-0.5 w-6 bg-black" />
-          </span>
-        </button>
+        {/* Mobile Right Side */}
+        <div className="flex items-center gap-1">
+          {/* Cart */}
+          <Link
+            href="/cart"
+            aria-label={`Panier, ${cartCount} articles`}
+            className={`relative flex h-10 w-10 items-center justify-center rounded-full ${
+              isHomePage
+                ? "text-[#292722]"
+                : "text-black"
+            }`}
+          >
+            <ShoppingBag
+              className="h-[19px] w-[19px]"
+              strokeWidth={1.5}
+            />
+
+            {cartCount > 0 && (
+              <span className="absolute right-0.5 top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#292722] px-1 font-inter text-[9px] font-medium leading-none text-white">
+                {cartCount > 99 ? "99+" : cartCount}
+              </span>
+            )}
+          </Link>
+
+          {/* Menu */}
+          <button
+            type="button"
+            className={`flex h-10 w-10 items-center justify-center rounded-full ${
+              isHomePage
+                ? "text-[#292722]"
+                : "text-black"
+            }`}
+            aria-controls="mobile-menu"
+            aria-expanded={open}
+            aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
+            onClick={() => setOpen((value) => !value)}
+          >
+            {open ? (
+              <X className="h-5 w-5" strokeWidth={1.5} />
+            ) : (
+              <Menu className="h-5 w-5" strokeWidth={1.5} />
+            )}
+          </button>
+        </div>
       </nav>
 
       {/* Mobile Menu */}
@@ -170,94 +265,83 @@ export default function Navbar() {
               duration: 0.25,
               ease: "easeOut",
             }}
-            className="
-              absolute
-              left-0
-              right-0
-              top-full
-              z-50
-              overflow-hidden
-              border-t
-              border-black/10
-              bg-[#C8C5C0]
-              shadow-lg
-              md:hidden
-            "
+            className={`absolute left-0 right-0 top-full z-50 overflow-hidden border-t shadow-lg md:hidden ${
+              isHomePage
+                ? "border-[#E8E2D9] bg-[#F8F6F2]"
+                : "border-black/10 bg-[#C8C5C0]"
+            }`}
           >
-            <ul className="space-y-1 px-6 py-5 font-jost">
+            <div className="px-5 py-5">
               {/* Main Links */}
-              {NAV_LINKS.map((l) => (
-                <li key={l.href}>
-                  <Link
-                    href={l.href}
-                    className="
-                      block
-                      border-b
-                      border-black/10
-                      py-3
-                      text-base
-                      text-black
-                      transition-colors
-                      hover:text-black/60
-                    "
-                    onClick={() => setOpen(false)}
-                  >
-                    {l.label}
-                  </Link>
-                </li>
-              ))}
+              <ul className="font-inter">
+                {NAV_LINKS.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className={`block border-b py-4 text-[15px] font-medium transition-colors ${
+                        isHomePage
+                          ? "border-[#E8E2D9] text-[#292722] hover:text-[#292722]/60"
+                          : "border-black/10 text-black hover:text-black/60"
+                      }`}
+                      onClick={() => setOpen(false)}
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
 
-              {/* Mobile Actions */}
-              <li className="flex flex-wrap gap-x-8 gap-y-5 pt-5">
-                {/* Search */}
+              {/* Secondary Actions */}
+              <div className="flex flex-wrap gap-x-7 gap-y-4 pt-5">
                 <Link
                   href="/search"
-                  className="flex items-center gap-2 text-sm text-black"
+                  className={`flex items-center gap-2 font-inter text-sm ${
+                    isHomePage
+                      ? "text-[#292722]"
+                      : "text-black"
+                  }`}
                   onClick={() => setOpen(false)}
                 >
-                  <Search className="h-5 w-5" strokeWidth={1.5} />
-                  Search
+                  <Search
+                    className="h-[18px] w-[18px]"
+                    strokeWidth={1.5}
+                  />
+                  Rechercher
                 </Link>
 
-                {/* Wishlist */}
                 <Link
                   href="/wishlist"
-                  className="flex items-center gap-2 text-sm text-black"
+                  className={`flex items-center gap-2 font-inter text-sm ${
+                    isHomePage
+                      ? "text-[#292722]"
+                      : "text-black"
+                  }`}
                   onClick={() => setOpen(false)}
                 >
-                  <Heart className="h-5 w-5" strokeWidth={1.5} />
-                  Wishlist
+                  <Heart
+                    className="h-[18px] w-[18px]"
+                    strokeWidth={1.5}
+                  />
+                  Favoris
                 </Link>
 
-                {/* Login */}
                 <Link
                   href="/login"
-                  className="flex items-center gap-2 text-sm text-black"
+                  className={`flex items-center gap-2 font-inter text-sm ${
+                    isHomePage
+                      ? "text-[#292722]"
+                      : "text-black"
+                  }`}
                   onClick={() => setOpen(false)}
                 >
-                  <User className="h-5 w-5" strokeWidth={1.5} />
-                  Login
+                  <User
+                    className="h-[18px] w-[18px]"
+                    strokeWidth={1.5}
+                  />
+                  Connexion
                 </Link>
-
-                {/* Cart */}
-                <Link
-                  href="/cart"
-                  className="flex items-center gap-2 text-sm text-black"
-                  onClick={() => setOpen(false)}
-                >
-                  <span className="relative">
-                    <ShoppingBag className="h-5 w-5" strokeWidth={1.5} />
-
-                    {cartCount > 0 && (
-                      <span className="absolute -right-2 -top-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-dark-900 px-1 text-[10px] leading-none text-white">
-                        {cartCount > 99 ? "99+" : cartCount}
-                      </span>
-                    )}
-                  </span>
-                  Cart
-                </Link>
-              </li>
-            </ul>
+              </div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
