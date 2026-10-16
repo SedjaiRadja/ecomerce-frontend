@@ -3,8 +3,7 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { useEffect, useState } from "react";
-import ProductCard from "./ProductCard";
-
+import EcommerceProductCard from "@/components/shadcn-space/card/card-17";
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 type Product = {
@@ -81,7 +80,7 @@ export default function BestSellers() {
         ) : products.length > 0 ? (
           <div className="grid grid-cols-2 gap-x-3 gap-y-10 sm:grid-cols-3 sm:gap-x-5 lg:grid-cols-4 lg:gap-x-6">
             {products.map((product) => (
-              <ProductCard key={product._id} product={product} theme="home" />
+              <EcommerceProductCard key={product._id} product={product} />
             ))}
           </div>
         ) : (

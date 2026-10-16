@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import ProductCard from "./ProductCard";
+import EcommerceProductCard from "@/components/shadcn-space/card/card-17";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -87,11 +87,10 @@ export default function NewArrivals() {
         ) : (
           <div className="grid grid-cols-2 gap-x-3 gap-y-10 sm:grid-cols-4 sm:gap-x-5 lg:gap-x-7">
             {products.slice(0, 4).map((product) => (
-              <ProductCard
+              <EcommerceProductCard
                 key={product._id}
                 product={product}
                 isNew
-                theme="home"
               />
             ))}
           </div>
