@@ -73,10 +73,13 @@ export default function NewArrivals() {
         </div>
 
         {loading ? (
-          <div className="flex min-h-[300px] items-center justify-center">
-            <p className="font-inter text-[9px] uppercase tracking-[0.2em] text-[#292722]/45">
-              Chargement des nouveautés...
-            </p>
+          <div className="grid grid-cols-2 gap-x-3 gap-y-10 sm:grid-cols-3 sm:gap-x-5 lg:grid-cols-4 lg:gap-x-6">
+            {[1, 2, 3, 4].map((item) => (
+              <div
+                key={item}
+                className="aspect-[3/4] animate-pulse bg-[#E8E2D9]"
+              />
+            ))}
           </div>
         ) : products.length === 0 ? (
           <div className="flex min-h-[300px] items-center justify-center">

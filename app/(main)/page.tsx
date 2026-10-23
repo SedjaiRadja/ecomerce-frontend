@@ -14,7 +14,6 @@ export default function Home() {
       <Benefits />
       <NewArrivals />
       <EditorialSection />
-      <BestSellers />
     </div>
   );
 }
