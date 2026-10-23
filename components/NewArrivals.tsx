@@ -85,13 +85,9 @@ export default function NewArrivals() {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-2 gap-x-3 gap-y-10 sm:grid-cols-4 sm:gap-x-5 lg:gap-x-7">
-            {products.slice(0, 4).map((product) => (
-              <EcommerceProductCard
-                key={product._id}
-                product={product}
-                isNew
-              />
+          <div className="grid grid-cols-2 items-stretch gap-x-3 gap-y-8 sm:grid-cols-3 sm:gap-x-5 sm:gap-y-10 xl:grid-cols-4">
+            {products.slice(0, 6).map((product) => (
+              <EcommerceProductCard key={product._id} product={product} />
             ))}
           </div>
         )}
