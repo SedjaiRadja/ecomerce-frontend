@@ -5,20 +5,13 @@ import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import {
-  Search,
-  Heart,
-  User,
-  ShoppingBag,
-  Menu,
-  X,
-} from "lucide-react";
+import { Search, Heart, User, ShoppingBag, Menu, X } from "lucide-react";
 import type { CartUpdatedDetail } from "@/components/CartProvider";
 
 const NAV_LINKS = [
-  { label: "Homme", href: "/products?gender=men" },
-  { label: "Femme", href: "/products?gender=women" },
-  { label: "Enfants", href: "/products?gender=unisex" },
+  { label: "Homme", href: "/products?genre=homme" },
+  { label: "Femme", href: "/products?genre=femme" },
+  { label: "Enfants", href: "/products?genre=enfant" },
   { label: "Collections", href: "/collections" },
   { label: "Contact", href: "/contact" },
 ] as const;
@@ -89,10 +82,7 @@ export default function Navbar() {
       {/* Desktop Navbar */}
       <nav className="hidden h-20 items-center gap-6 px-6 md:flex lg:px-10 xl:px-14">
         {/* Logo */}
-        <Link
-          href="/"
-          className="shrink-0 transition-opacity hover:opacity-75"
-        >
+        <Link href="/" className="shrink-0 transition-opacity hover:opacity-75">
           <Image
             src="/logo.png"
             alt="Allure"
@@ -144,9 +134,7 @@ export default function Navbar() {
             href="/wishlist"
             aria-label="Liste de souhaits"
             className={`flex h-10 w-10 items-center justify-center rounded-full transition-colors ${
-              isHomePage
-                ? "hover:bg-white"
-                : "hover:bg-white/50"
+              isHomePage ? "hover:bg-white" : "hover:bg-white/50"
             } ${textColor}`}
           >
             <Heart className="h-[19px] w-[19px]" strokeWidth={1.5} />
@@ -157,9 +145,7 @@ export default function Navbar() {
             href="/login"
             aria-label="Connexion"
             className={`flex h-10 w-10 items-center justify-center rounded-full transition-colors ${
-              isHomePage
-                ? "hover:bg-white"
-                : "hover:bg-white/50"
+              isHomePage ? "hover:bg-white" : "hover:bg-white/50"
             } ${textColor}`}
           >
             <User className="h-[19px] w-[19px]" strokeWidth={1.5} />
@@ -170,15 +156,10 @@ export default function Navbar() {
             href="/cart"
             aria-label={`Panier, ${cartCount} articles`}
             className={`relative flex h-10 w-10 items-center justify-center rounded-full transition-colors ${
-              isHomePage
-                ? "hover:bg-white"
-                : "hover:bg-white/50"
+              isHomePage ? "hover:bg-white" : "hover:bg-white/50"
             } ${textColor}`}
           >
-            <ShoppingBag
-              className="h-[19px] w-[19px]"
-              strokeWidth={1.5}
-            />
+            <ShoppingBag className="h-[19px] w-[19px]" strokeWidth={1.5} />
 
             {cartCount > 0 && (
               <span className="absolute right-0.5 top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#292722] px-1 font-inter text-[9px] font-medium leading-none text-white">
@@ -192,11 +173,7 @@ export default function Navbar() {
       {/* Mobile Navbar */}
       <nav className="flex h-20 items-center justify-between px-5 md:hidden">
         {/* Logo */}
-        <Link
-          href="/"
-          className="shrink-0"
-          onClick={() => setOpen(false)}
-        >
+        <Link href="/" className="shrink-0" onClick={() => setOpen(false)}>
           <Image
             src="/logo.png"
             alt="Allure"
@@ -214,15 +191,10 @@ export default function Navbar() {
             href="/cart"
             aria-label={`Panier, ${cartCount} articles`}
             className={`relative flex h-10 w-10 items-center justify-center rounded-full ${
-              isHomePage
-                ? "text-[#292722]"
-                : "text-black"
+              isHomePage ? "text-[#292722]" : "text-black"
             }`}
           >
-            <ShoppingBag
-              className="h-[19px] w-[19px]"
-              strokeWidth={1.5}
-            />
+            <ShoppingBag className="h-[19px] w-[19px]" strokeWidth={1.5} />
 
             {cartCount > 0 && (
               <span className="absolute right-0.5 top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#292722] px-1 font-inter text-[9px] font-medium leading-none text-white">
@@ -235,9 +207,7 @@ export default function Navbar() {
           <button
             type="button"
             className={`flex h-10 w-10 items-center justify-center rounded-full ${
-              isHomePage
-                ? "text-[#292722]"
-                : "text-black"
+              isHomePage ? "text-[#292722]" : "text-black"
             }`}
             aria-controls="mobile-menu"
             aria-expanded={open}
@@ -296,48 +266,33 @@ export default function Navbar() {
                 <Link
                   href="/search"
                   className={`flex items-center gap-2 font-inter text-sm ${
-                    isHomePage
-                      ? "text-[#292722]"
-                      : "text-black"
+                    isHomePage ? "text-[#292722]" : "text-black"
                   }`}
                   onClick={() => setOpen(false)}
                 >
-                  <Search
-                    className="h-[18px] w-[18px]"
-                    strokeWidth={1.5}
-                  />
+                  <Search className="h-[18px] w-[18px]" strokeWidth={1.5} />
                   Rechercher
                 </Link>
 
                 <Link
                   href="/wishlist"
                   className={`flex items-center gap-2 font-inter text-sm ${
-                    isHomePage
-                      ? "text-[#292722]"
-                      : "text-black"
+                    isHomePage ? "text-[#292722]" : "text-black"
                   }`}
                   onClick={() => setOpen(false)}
                 >
-                  <Heart
-                    className="h-[18px] w-[18px]"
-                    strokeWidth={1.5}
-                  />
+                  <Heart className="h-[18px] w-[18px]" strokeWidth={1.5} />
                   Favoris
                 </Link>
 
                 <Link
                   href="/login"
                   className={`flex items-center gap-2 font-inter text-sm ${
-                    isHomePage
-                      ? "text-[#292722]"
-                      : "text-black"
+                    isHomePage ? "text-[#292722]" : "text-black"
                   }`}
                   onClick={() => setOpen(false)}
                 >
-                  <User
-                    className="h-[18px] w-[18px]"
-                    strokeWidth={1.5}
-                  />
+                  <User className="h-[18px] w-[18px]" strokeWidth={1.5} />
                   Connexion
                 </Link>
               </div>

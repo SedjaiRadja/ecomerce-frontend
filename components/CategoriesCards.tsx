@@ -6,19 +6,19 @@ const categories = [
     title: "FEMMES",
     description: "Découvrez notre collection",
     image: "/categories/women.png",
-    href: "/products?gender=women",
+    href: "/products?genre=femme",
   },
   {
     title: "HOMMES",
     description: "Découvrez notre collection",
     image: "/categories/men.png",
-    href: "/products?gender=men",
+    href: "/products?genre=homme",
   },
   {
     title: "ENFANTS",
     description: "Découvrez notre collection",
     image: "/categories/kids.png",
-    href: "/products?gender=unisex",
+    href: "/products?genre=enfant",
   },
 ];
 

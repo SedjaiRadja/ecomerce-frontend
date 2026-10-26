@@ -3,11 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  Heart,
-  ShoppingBag,
-  ArrowUpRight,
-} from "lucide-react";
+import { Heart, ShoppingBag, ArrowUpRight } from "lucide-react";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -71,18 +67,24 @@ export default function EcommerceProductCard({
           aria-label={`Voir ${product.name}`}
           className="absolute inset-0"
         >
-          <Image
-            src={product.image}
-            alt={product.name}
-            fill
-            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-            className={cn(
-              "transition-transform duration-500 group-hover/card:scale-[1.03]",
-              isHomeTheme
-                ? "object-contain p-3 sm:p-5"
-                : "object-cover"
-            )}
-          />
+          {product.image?.trim() ? (
+            <Image
+              src={product.image}
+              alt={product.name}
+              fill
+              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+              className={cn(
+                "transition-transform duration-500 group-hover/card:scale-[1.03]",
+                isHomeTheme ? "object-contain p-3 sm:p-5" : "object-cover",
+              )}
+            />
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center bg-[#E8E2D9]">
+              <span className="font-inter text-xs text-[#292722]/50">
+                Image indisponible
+              </span>
+            </div>
+          )}
         </Link>
 
         {isNew && (
@@ -94,9 +96,7 @@ export default function EcommerceProductCard({
         <button
           type="button"
           aria-label={
-            isWishlisted
-              ? "Retirer des favoris"
-              : "Ajouter aux favoris"
+            isWishlisted ? "Retirer des favoris" : "Ajouter aux favoris"
           }
           aria-pressed={isWishlisted}
           onClick={() => setIsWishlisted((value) => !value)}
@@ -105,9 +105,7 @@ export default function EcommerceProductCard({
           <Heart
             className={cn(
               "h-4 w-4",
-              isWishlisted
-                ? "fill-rose-500 text-rose-500"
-                : "text-[#292722]"
+              isWishlisted ? "fill-rose-500 text-rose-500" : "text-[#292722]",
             )}
             strokeWidth={1.3}
           />
@@ -118,10 +116,7 @@ export default function EcommerceProductCard({
           aria-label={`Découvrir ${product.name}`}
           className="absolute bottom-2 right-2 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 transition-transform hover:translate-x-0.5 hover:-translate-y-0.5 sm:bottom-3 sm:right-3"
         >
-          <ArrowUpRight
-            className="h-4 w-4 text-[#292722]"
-            strokeWidth={1.2}
-          />
+          <ArrowUpRight className="h-4 w-4 text-[#292722]" strokeWidth={1.2} />
         </Link>
       </div>
 
@@ -132,10 +127,7 @@ export default function EcommerceProductCard({
         </p>
 
         <div className="flex min-w-0 items-start justify-between gap-2">
-          <Link
-            href={`/products/${product._id}`}
-            className="min-w-0 flex-1"
-          >
+          <Link href={`/products/${product._id}`} className="min-w-0 flex-1">
             <h3 className="line-clamp-2 font-inter text-[11px] font-medium leading-5 text-[#292722] sm:text-sm">
               {product.name}
             </h3>
@@ -161,7 +153,7 @@ export default function EcommerceProductCard({
             "h-9 w-full cursor-pointer rounded-none border px-2 font-inter text-[8px] font-normal uppercase tracking-[0.08em] transition-colors disabled:cursor-not-allowed disabled:opacity-60 sm:h-11 sm:text-[9px] sm:tracking-[0.14em]",
             added
               ? "border-[#52745B] bg-[#52745B] text-white hover:bg-[#52745B]"
-              : "border-[#292722] bg-[#292722] text-white hover:bg-[#1f1d1a]"
+              : "border-[#292722] bg-[#292722] text-white hover:bg-[#1f1d1a]",
           )}
         >
           <ShoppingBag

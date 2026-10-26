@@ -14,7 +14,7 @@ export type Product = {
   name: string;
   description: string;
   price: number;
-  image: string;
+  images: string[];
   category: string;
   stock: number;
 };
@@ -53,7 +53,7 @@ export default function EcommerceProductCard({
       setAdding(false);
     }
   };
-
+  console.log("Product images:", product.images);
   return (
     <Card className="group/card flex h-full w-full min-w-0 flex-col gap-0 overflow-hidden rounded-none border-0 bg-transparent p-0 shadow-none">
       {/* Editorial product image */}
@@ -64,7 +64,7 @@ export default function EcommerceProductCard({
           className="absolute inset-0"
         >
           <Image
-            src={product.image}
+            src={product.images?.[0] || "/images/placeholder.jpg"}
             alt={product.name}
             fill
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"

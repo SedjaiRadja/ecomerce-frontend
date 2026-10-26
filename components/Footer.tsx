@@ -51,21 +51,21 @@ export default function Footer() {
 
             <div className="mt-5 flex flex-col gap-3">
               <Link
-                href="/products?gender=women"
+                href="/products?genre=femme"
                 className="w-fit font-inter text-sm transition-opacity hover:opacity-50"
               >
                 Femme
               </Link>
 
               <Link
-                href="/products?gender=men"
+                href="/products?genre=homme"
                 className="w-fit font-inter text-sm transition-opacity hover:opacity-50"
               >
                 Homme
               </Link>
 
               <Link
-                href="/products?gender=unisex"
+                href="/products?genre=enfant"
                 className="w-fit font-inter text-sm transition-opacity hover:opacity-50"
               >
                 Enfants
