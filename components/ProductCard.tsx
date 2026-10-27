@@ -1,26 +1,25 @@
+
 "use client";
 
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Heart, ShoppingBag, ArrowUpRight } from "lucide-react";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { ArrowUpRight, Heart, ShoppingBag } from "lucide-react";
 import { useCart } from "@/components/CartProvider";
 
-export type Product = {
+export type ProductCardProduct = {
   _id: string;
   name: string;
   description: string;
   price: number;
   image: string;
   category: string;
+  genre?: string;
   stock: number;
 };
 
 type EcommerceProductCardProps = {
-  product: Product;
+  product: ProductCardProduct;
   isNew?: boolean;
   theme?: "default" | "home";
 };
@@ -32,152 +31,162 @@ export default function EcommerceProductCard({
 }: EcommerceProductCardProps) {
   const { addToCart } = useCart();
 
-  const [isWishlisted, setIsWishlisted] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
   const [adding, setAdding] = useState(false);
   const [added, setAdded] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState("");
 
-  const isHomeTheme = theme === "home";
+  const outOfStock = product.stock <= 0;
+
+  const formattedPrice = new Intl.NumberFormat("fr-FR", {
+    maximumFractionDigits: 0,
+  }).format(product.price);
+
+  const genreLabels: Record<string, string> = {
+    femme: "Femme",
+    homme: "Homme",
+    enfant: "Enfant",
+  };
+
+  const genre = product.genre?.toLowerCase() ?? "";
 
   const handleAddToCart = async () => {
-    if (product.stock <= 0 || adding) return;
+    if (outOfStock || adding) return;
+
+    setAdding(true);
+    setAdded(false);
+    setError("");
 
     try {
-      setAdding(true);
-      setError(false);
-
       await addToCart(product._id, 1);
-
       setAdded(true);
-      window.setTimeout(() => setAdded(false), 1500);
     } catch (err) {
       console.error("Erreur lors de l'ajout au panier :", err);
-      setError(true);
+      setError("Impossible d'ajouter ce produit.");
     } finally {
       setAdding(false);
     }
   };
 
   return (
-    <Card className="group/card flex w-full min-w-0 flex-col gap-0 overflow-hidden rounded-none border-0 bg-transparent p-0 shadow-none">
-      {/* Product image */}
-      <div className="relative aspect-[3/4] w-full overflow-hidden bg-[#E8E2D9]">
-        <Link
-          href={`/products/${product._id}`}
-          aria-label={`Voir ${product.name}`}
-          className="absolute inset-0"
-        >
-          {product.image?.trim() ? (
-            <Image
-              src={product.image}
-              alt={product.name}
-              fill
-              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-              className={cn(
-                "transition-transform duration-500 group-hover/card:scale-[1.03]",
-                isHomeTheme ? "object-contain p-3 sm:p-5" : "object-cover",
-              )}
-            />
-          ) : (
-            <div className="absolute inset-0 flex items-center justify-center bg-[#E8E2D9]">
-              <span className="font-inter text-xs text-[#292722]/50">
-                Image indisponible
-              </span>
-            </div>
-          )}
-        </Link>
+    <article
+      className={`flex h-full min-w-0 flex-col overflow-hidden border border-[#E8E2D9] ${
+        theme === "home" ? "bg-[#F8F6F2]" : "bg-white"
+      }`}
+    >
+      {/* Image : même ratio pour toutes les cartes */}
+      <div className="relative aspect-[3/4] shrink-0 overflow-hidden bg-[#F8F6F2]">
+        {product.image ? (
+          <Image
+            src={product.image}
+            alt={product.name}
+            fill
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+            className="object-contain p-2 sm:p-3"
+          />
+        ) : (
+          <div className="flex h-full items-center justify-center text-xs text-[#8C8174]">
+            Image indisponible
+          </div>
+        )}
 
         {isNew && (
-          <span className="pointer-events-none absolute left-2 top-2 z-10 bg-[#F8F6F2]/95 px-2 py-1 font-inter text-[7px] uppercase tracking-[0.18em] text-[#292722] sm:left-3 sm:top-3 sm:text-[9px]">
+          <span className="absolute left-2 top-2 bg-white/95 px-2 py-1 text-[8px] uppercase tracking-[0.15em] text-[#8C8174] sm:left-3 sm:top-3 sm:text-[9px]">
             Nouveau
+          </span>
+        )}
+
+        {outOfStock && (
+          <span className="absolute bottom-2 left-2 bg-white/95 px-2 py-1 text-[8px] uppercase tracking-wide text-[#777168]">
+            Épuisé
           </span>
         )}
 
         <button
           type="button"
+          onClick={() => setIsFavorite((previous) => !previous)}
           aria-label={
-            isWishlisted ? "Retirer des favoris" : "Ajouter aux favoris"
+            isFavorite ? "Retirer des favoris" : "Ajouter aux favoris"
           }
-          aria-pressed={isWishlisted}
-          onClick={() => setIsWishlisted((value) => !value)}
-          className="absolute right-2 top-2 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 transition-transform hover:scale-105 sm:right-3 sm:top-3"
+          aria-pressed={isFavorite}
+          className={`absolute right-2 top-2 flex h-7 w-7 items-center justify-center rounded-full border border-[#E8E2D9] bg-white/95 sm:right-3 sm:top-3 sm:h-8 sm:w-8 ${
+            isFavorite ? "text-[#B49A78]" : "text-[#777168]"
+          }`}
         >
           <Heart
-            className={cn(
-              "h-4 w-4",
-              isWishlisted ? "fill-rose-500 text-rose-500" : "text-[#292722]",
-            )}
-            strokeWidth={1.3}
+            size={14}
+            strokeWidth={1.5}
+            fill={isFavorite ? "currentColor" : "none"}
           />
         </button>
 
         <Link
           href={`/products/${product._id}`}
-          aria-label={`Découvrir ${product.name}`}
-          className="absolute bottom-2 right-2 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 transition-transform hover:translate-x-0.5 hover:-translate-y-0.5 sm:bottom-3 sm:right-3"
+          aria-label={`Voir ${product.name}`}
+          className="absolute bottom-2 right-2 flex h-7 w-7 items-center justify-center rounded-full border border-[#E8E2D9] bg-white/95 text-[#292722] hover:bg-[#292722] hover:text-white sm:bottom-3 sm:right-3 sm:h-8 sm:w-8"
         >
-          <ArrowUpRight className="h-4 w-4 text-[#292722]" strokeWidth={1.2} />
+          <ArrowUpRight size={15} strokeWidth={1.5} />
         </Link>
       </div>
 
-      {/* Product information */}
-      <CardContent className="flex min-w-0 flex-1 flex-col space-y-2 border-b border-[#E8E2D9] px-0 pb-3 pt-3 sm:pb-4 sm:pt-4">
-        <p className="truncate font-inter text-[8px] uppercase tracking-[0.18em] text-[#292722]/50 sm:text-[9px]">
+      {/* Informations produit : espace régulier et hauteur flexible */}
+      <div className="flex flex-1 flex-col px-3 pb-3 pt-3 sm:px-4 sm:pb-4 sm:pt-4">
+        <p className="mb-1.5 truncate text-[8px] uppercase tracking-[0.16em] text-[#B49A78] sm:text-[9px]">
           {product.category}
         </p>
 
-        <div className="flex min-w-0 items-start justify-between gap-2">
-          <Link href={`/products/${product._id}`} className="min-w-0 flex-1">
-            <h3 className="line-clamp-2 font-inter text-[11px] font-medium leading-5 text-[#292722] sm:text-sm">
-              {product.name}
-            </h3>
-          </Link>
+        <div className="flex items-start justify-between gap-2">
+          <h3 className="line-clamp-2 min-w-0 flex-1 text-[11px] font-medium leading-4 text-[#292722] sm:text-xs sm:leading-5">
+            {product.name}
+          </h3>
 
-          <span className="shrink-0 whitespace-nowrap font-inter text-[10px] font-medium text-[#292722] sm:text-sm">
-            {product.price.toLocaleString("fr-FR")} DA
-          </span>
+          <p className="shrink-0 whitespace-nowrap pt-0.5 text-[10px] font-medium tabular-nums text-[#292722] sm:text-xs">
+            {formattedPrice} DA
+          </p>
         </div>
 
-        <p className="line-clamp-2 min-h-7 font-inter text-[9px] leading-4 text-[#292722]/55 sm:text-[10px]">
+        {/* Genre : sous le nom et le prix */}
+        <p className="mt-1 text-[9px] uppercase tracking-wide text-[#777168] sm:text-[10px]">
+          {genreLabels[genre] ?? product.genre ?? "Collection"}
+        </p>
+
+        {/* Hauteur réservée pour aligner les boutons */}
+        <p className="mt-2 line-clamp-2 min-h-8 text-[9px] leading-4 text-[#8C8174] sm:text-[10px]">
           {product.description}
         </p>
-      </CardContent>
+      </div>
 
-      {/* Add to cart */}
-      <CardFooter className="flex-col items-stretch gap-2 px-0 pb-0 pt-3">
-        <Button
-          type="button"
-          onClick={handleAddToCart}
-          disabled={adding || product.stock <= 0}
-          className={cn(
-            "h-9 w-full cursor-pointer rounded-none border px-2 font-inter text-[8px] font-normal uppercase tracking-[0.08em] transition-colors disabled:cursor-not-allowed disabled:opacity-60 sm:h-11 sm:text-[9px] sm:tracking-[0.14em]",
-            added
-              ? "border-[#52745B] bg-[#52745B] text-white hover:bg-[#52745B]"
-              : "border-[#292722] bg-[#292722] text-white hover:bg-[#1f1d1a]",
-          )}
-        >
-          <ShoppingBag
-            className="h-3.5 w-3.5 shrink-0 sm:h-4 sm:w-4"
-            strokeWidth={1.3}
-          />
+      {/* Bouton aligné en bas de chaque carte */}
+      <button
+        type="button"
+        onClick={handleAddToCart}
+        disabled={outOfStock || adding}
+        className={`mt-auto flex min-h-9 w-full items-center justify-center gap-1.5 px-1.5 py-2 text-[8px] font-medium uppercase tracking-[0.08em] text-white transition-colors sm:gap-2 sm:text-[9px] sm:tracking-[0.1em] ${
+          added
+            ? "bg-[#52745B]"
+            : outOfStock || adding
+              ? "cursor-not-allowed bg-[#8C8174]"
+              : "bg-[#292722] hover:bg-[#444039]"
+        }`}
+      >
+        <ShoppingBag size={12} strokeWidth={1.5} />
 
-          <span className="truncate">
-            {product.stock <= 0
-              ? "Rupture de stock"
-              : adding
-                ? "Ajout..."
-                : added
-                  ? "Ajouté ✓"
-                  : "Ajouter au panier"}
-          </span>
-        </Button>
+        <span>
+          {outOfStock
+            ? "Indisponible"
+            : adding
+              ? "Ajout..."
+              : added
+                ? "Ajouté au panier"
+                : "Ajouter au panier"}
+        </span>
+      </button>
 
-        {error && (
-          <p role="alert" className="text-xs text-red-600">
-            Impossible d&apos;ajouter le produit. Réessaie.
-          </p>
-        )}
-      </CardFooter>
-    </Card>
+      {error && (
+        <p role="alert" className="px-2 py-1 text-center text-[9px] text-red-600">
+          {error}
+        </p>
+      )}
+    </article>
   );
 }
