@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 
 const HeroSection = () => {
   return (
-    <section className="relative h-[calc(100dvh-56px)] w-full overflow-hidden bg-ivory">
+    <section className="relative mt-[var(--navbar-height)] h-[calc(100dvh-var(--navbar-height))] w-full overflow-hidden bg-ivory">
       <h1 className="absolute inset-0 z-0 flex items-center justify-center whitespace-nowrap font-playfair text-[42vw] font-bold leading-none tracking-[-0.08em] text-charcoal md:text-[24vw]">
         ALLURE
       </h1>

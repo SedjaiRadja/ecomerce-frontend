@@ -296,7 +296,7 @@ export default function ContactPage() {
                 </p>
                 <button
                   type="submit"
-                  className="group inline-flex min-h-10 shrink-0 items-center justify-center gap-5 bg-[#292722] px-5 py-2.5 text-[9px] uppercase tracking-[0.12em] text-white transition-colors duration-300 hover:bg-[#B49A78] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B49A78]"
+                  className="flex h-9 w-full min-w-0 items-center justify-center gap-1 rounded-none border px-1.5 font-inter text-[10px] font-normal normal-case tracking-normal transition-colors duration-200 sm:h-10 sm:gap-2 sm:px-3 sm:text-xs"
                 >
                   Send your message
                   <Send
