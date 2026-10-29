@@ -1,6 +1,5 @@
-
 "use client";
-
+import { useSearchParams, useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import {
   ArrowDownUp,
@@ -37,18 +36,18 @@ const genreOptions = [
   { label: "Enfant", value: "enfant" },
 ];
 
-export default function ProductCollection({
-  genre,
-}: ProductCollectionProps) {
-  // Le genre de l'URL est utilisé par défaut.
-  // L'utilisateur peut ensuite sélectionner un autre genre.
+export default function ProductCollection({ genre }: ProductCollectionProps) {
+  const router = useRouter();
   const [manualGenre, setManualGenre] = useState<string | null>(null);
   const selectedGenre = manualGenre ?? genre ?? "Toutes";
 
   const [availability, setAvailability] = useState("Toutes");
   const [priceRange, setPriceRange] = useState("Tous");
   const [sortBy, setSortBy] = useState("recent");
-  const [search, setSearch] = useState("");
+
+  const searchParams = useSearchParams();
+  const search = searchParams.get("search") ?? "";
+
   const [showFilters, setShowFilters] = useState(false);
 
   const [products, setProducts] = useState<Product[]>([]);
@@ -77,13 +76,9 @@ export default function ProductCollection({
         const data: { products?: Product[] } | Product[] =
           await response.json();
 
-        const fetchedProducts = Array.isArray(data)
-          ? data
-          : data.products;
+        const fetchedProducts = Array.isArray(data) ? data : data.products;
 
-        setProducts(
-          Array.isArray(fetchedProducts) ? fetchedProducts : [],
-        );
+        setProducts(Array.isArray(fetchedProducts) ? fetchedProducts : []);
         setFetchError(false);
       } catch (error) {
         if (error instanceof Error && error.name === "AbortError") {
@@ -142,9 +137,9 @@ export default function ProductCollection({
 
       result = result.filter(
         (product) =>
-          product.name.toLowerCase().includes(query) ||
-          product.category.toLowerCase().includes(query) ||
-          product.description.toLowerCase().includes(query),
+          product.name?.toLowerCase().includes(query) ||
+          product.category?.toLowerCase().includes(query) ||
+          product.description?.toLowerCase().includes(query),
       );
     }
 
@@ -157,21 +152,14 @@ export default function ProductCollection({
     }
 
     return result;
-  }, [
-    products,
-    selectedGenre,
-    availability,
-    priceRange,
-    sortBy,
-    search,
-  ]);
+  }, [products, selectedGenre, availability, priceRange, sortBy, search]);
 
   const resetFilters = () => {
     setManualGenre(null);
     setAvailability("Toutes");
     setPriceRange("Tous");
     setSortBy("recent");
-    setSearch("");
+    router.replace("/products");
   };
 
   const activeFiltersCount = [
@@ -221,8 +209,8 @@ export default function ProductCollection({
               </h1>
 
               <p className="mt-4 max-w-md text-sm leading-6 text-[#777168]">
-                Des pièces choisies avec soin, pensées pour traverser
-                les saisons avec élégance.
+                Des pièces choisies avec soin, pensées pour traverser les
+                saisons avec élégance.
               </p>
             </div>
 
@@ -265,16 +253,16 @@ export default function ProductCollection({
             <input
               type="search"
               value={search}
-              onChange={(event) => setSearch(event.target.value)}
+              readOnly
               placeholder="Rechercher une pièce..."
               aria-label="Rechercher un produit"
-              className="w-full border-b border-[#CFC7BC] bg-transparent py-3 pr-9 text-sm outline-none placeholder:text-[#999186] focus:border-[#292722]"
+              className="w-full border-b border-[#CFC7BC] bg-transparent py-3 pr-9 text-sm outline-none"
             />
 
             {search && (
               <button
                 type="button"
-                onClick={() => setSearch("")}
+                onClick={() => router.replace("/products")}
                 aria-label="Effacer la recherche"
                 className="absolute right-0 top-3 text-[#777168] hover:text-[#292722]"
               >
@@ -381,8 +369,8 @@ export default function ProductCollection({
             </h2>
 
             <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-[#777168]">
-              Impossible de charger les produits. Vérifie la connexion
-              au serveur et réessaie.
+              Impossible de charger les produits. Vérifie la connexion au
+              serveur et réessaie.
             </p>
 
             <button
