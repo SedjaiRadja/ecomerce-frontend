@@ -198,7 +198,7 @@ export default function ProductCollection({ genre }: ProductCollectionProps) {
       <div className="mx-auto max-w-7xl">
         {/* En-tête */}
         <header className="mb-10 border-b border-[#E8E2D9] pb-8 sm:mb-14 sm:pb-10">
-          <p className="mb-4 text-[10px] uppercase tracking-[0.3em] text-[#8C8174]">
+          <p className="mb-4 text-[10px] uppercase tracking-[0.3em] text-[#8C8174] pt-10">
             ALLURE — L&apos;art de s&apos;habiller
           </p>
 

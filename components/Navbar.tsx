@@ -320,7 +320,6 @@ export default function Navbar() {
 
           {/* Right Actions */}
           <div className="flex items-center gap-1">
-            {/* Cart: visible only when menu is closed */}
             {!open && (
               <Link
                 href="/cart"
@@ -337,7 +336,7 @@ export default function Navbar() {
               </Link>
             )}
 
-            {/* Hamburger / Close Menu */}
+            {/* Hamburger / Close */}
             <button
               type="button"
               className={iconButtonClass}
@@ -370,7 +369,7 @@ export default function Navbar() {
               className="absolute inset-x-0 top-full z-50 overflow-hidden border-t border-[#E8E2D9] bg-[#F8F6F2] shadow-lg md:hidden"
             >
               <div className="px-5 py-5">
-                {/* Search */}
+                {/* Search Form */}
                 {searchOpen && (
                   <form
                     onSubmit={handleSearch}
@@ -394,18 +393,21 @@ export default function Navbar() {
 
                     {searchQuery.trim() && (
                       <>
+                        {/* Submit Search */}
                         <button
                           type="submit"
-                          className="shrink-0 font-inter text-xs tracking-wider text-[#292722] hover:text-[#B49A78]"
+                          disabled={!searchQuery.trim()}
+                          className="shrink-0 font-inter text-xs tracking-wider text-[#292722] transition-opacity hover:opacity-60 disabled:opacity-30"
                         >
                           OK
                         </button>
 
+                        {/* Clear Input */}
                         <button
                           type="button"
                           onClick={() => setSearchQuery("")}
                           aria-label="Effacer le texte"
-                          className="shrink-0 text-[#777168] hover:text-[#292722]"
+                          className="shrink-0 text-[#777168] transition-colors hover:text-[#292722]"
                         >
                           <X size={15} strokeWidth={1.6} />
                         </button>
@@ -413,10 +415,21 @@ export default function Navbar() {
                     )}
 
                     {/* Close Search Only */}
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSearchOpen(false);
+                        setSearchQuery("");
+                      }}
+                      aria-label="Fermer la recherche"
+                      className="shrink-0 text-[#777168] transition-colors hover:text-[#292722]"
+                    >
+                      <X size={17} strokeWidth={1.6} />
+                    </button>
                   </form>
                 )}
 
-                {/* Search Toggle: visible when search is closed */}
+                {/* Search Toggle */}
                 {!searchOpen && (
                   <button
                     type="button"
