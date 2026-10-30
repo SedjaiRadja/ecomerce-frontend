@@ -40,11 +40,7 @@ export default function RegisterPage() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            name,
-            email,
-            password,
-          }),
+          body: JSON.stringify({ name, email, password }),
         },
       );
 
@@ -73,193 +69,224 @@ export default function RegisterPage() {
     }
   };
 
+  const inputClass =
+    "w-full border-0 border-b border-[#292722]/20 bg-transparent px-0 py-3.5 font-inter text-sm text-[#292722] placeholder:text-[#292722]/30 outline-none transition-colors duration-300 focus:border-[#B49A78]";
+
+  const labelClass =
+    "mb-3 block font-inter text-[10px] uppercase tracking-[0.22em] text-[#292722]/60";
+
   return (
-    <main className="min-h-screen bg-[#E8E5E0]">
+    <main className="min-h-screen bg-[#F8F6F2]">
       <div className="grid min-h-screen lg:grid-cols-2">
-        {/* ================= LEFT ================= */}
-        <div className="hidden flex-col justify-between bg-[#C8C5C0] px-12 py-14 lg:flex xl:px-20">
-          {/* Decorative text */}
+        {/* LEFT — BRAND PANEL */}
+        <section className="relative hidden min-h-screen flex-col justify-between overflow-hidden bg-[#E8E2D9] px-12 py-14 lg:flex xl:px-20">
           <div>
-            <p className="font-inter text-[11px] uppercase tracking-[0.35em] text-black/40">
-              L&apos;univers
+            <p className="font-inter text-[10px] uppercase tracking-[0.35em] text-[#292722]/45">
+              Elegance · Simplicity · Allure
+            </p>
+          </div>
+
+          <div className="relative z-10">
+            <p className="font-inter text-[11px] uppercase tracking-[0.35em] text-[#292722]/45">
+              Entrez dans
             </p>
 
-            <h1 className="mt-8 font-playfair text-7xl font-light uppercase leading-none tracking-[0.08em] xl:text-8xl">
+            <h1 className="mt-7 font-playfair text-7xl font-light uppercase leading-none tracking-[0.1em] text-[#292722] xl:text-8xl">
               ALLURE
             </h1>
 
-            <div className="mt-8 h-px w-24 bg-black/30" />
-          </div>
+            <div className="mt-8 h-px w-20 bg-[#B49A78]" />
 
-          <div className="max-w-md">
-            <p className="font-inter text-lg font-light leading-8 text-black/55 xl:text-xl">
+            <p className="mt-12 max-w-md font-inter text-lg font-light leading-9 text-[#292722]/65 xl:text-xl">
               Créez votre espace personnel et découvrez une expérience pensée
               autour de votre style.
             </p>
 
-            <p className="mt-8 font-inter text-[11px] uppercase tracking-[0.25em] text-black/30">
-              Élégance · Simplicité · Allure
+            <p className="mt-8 font-inter text-[10px] uppercase tracking-[0.25em] text-[#292722]/40">
+              Votre style. Votre espace.
             </p>
           </div>
-        </div>
 
-        {/* ================= RIGHT ================= */}
-        <div className="flex min-h-screen flex-col justify-center bg-[#E8E5E0] px-7 py-14 sm:px-12 lg:px-16 xl:px-24">
+          <div>
+            <p className="font-inter text-[10px] uppercase tracking-[0.25em] text-[#292722]/35">
+              © {new Date().getFullYear()} ALLURE
+            </p>
+          </div>
+
+          {/* Subtle decorative circles */}
+          <div className="pointer-events-none absolute -bottom-32 -right-32 h-96 w-96 rounded-full border border-[#B49A78]/20" />
+          <div className="pointer-events-none absolute -bottom-20 -right-20 h-72 w-72 rounded-full border border-[#B49A78]/20" />
+        </section>
+
+        {/* RIGHT — REGISTER FORM */}
+        <section className="flex min-h-screen flex-col justify-center bg-[#F8F6F2] px-7 py-10 sm:px-14 lg:px-16 xl:px-24">
           {/* Mobile logo */}
-          <div className="mb-14 lg:hidden">
-            <p className="font-inter text-3xl font-light uppercase tracking-[0.15em]">
+          <div className="mb-12 lg:hidden">
+            <p className="font-playfair text-3xl font-light uppercase tracking-[0.15em] text-[#292722]">
               ALLURE
             </p>
+
+            <div className="mt-4 h-px w-12 bg-[#B49A78]" />
           </div>
 
-          {/* Header */}
-          <div className="mb-12">
-            <p className="mb-5 font-inter text-[11px] uppercase tracking-[0.35em] text-black/40">
-              Nouvel espace
-            </p>
-
-            <h2 className="font-playfair text-4xl font-light uppercase leading-tight tracking-[0.06em] sm:text-5xl">
-              Créer un compte
-            </h2>
-
-            <p className="mt-5 max-w-md font-inter text-base leading-7 text-black/50">
-              Rejoignez ALLURE et créez votre espace personnel.
-            </p>
-          </div>
-
-          {/* ================= FORM ================= */}
-          <form onSubmit={handleRegister} className="space-y-8">
-            {/* Name */}
-            <div>
-              <label
-                htmlFor="name"
-                className="mb-4 block font-inter text-[11px] uppercase tracking-[0.25em] text-black/50"
-              >
-                Nom complet
-              </label>
-
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Votre nom"
-                required
-                className="w-full border-0 border-b border-black/20 bg-transparent px-0 py-4 font-inter text-base text-black placeholder:text-black/25 outline-none transition-all duration-300 focus:border-black"
-              />
-            </div>
-
-            {/* Email */}
-            <div>
-              <label
-                htmlFor="email"
-                className="mb-4 block font-inter text-[11px] uppercase tracking-[0.25em] text-black/50"
-              >
-                Adresse e-mail
-              </label>
-
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="votre@email.com"
-                required
-                className="w-full border-0 border-b border-black/20 bg-transparent px-0 py-4 font-inter text-base text-black placeholder:text-black/25 outline-none transition-all duration-300 focus:border-black"
-              />
-            </div>
-
-            {/* Password */}
-            <div>
-              <label
-                htmlFor="password"
-                className="mb-4 block font-inter text-[11px] uppercase tracking-[0.25em] text-black/50"
-              >
-                Mot de passe
-              </label>
-
-              <input
-                type="password"
-                id="password"
-                name="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                required
-                className="w-full border-0 border-b border-black/20 bg-transparent px-0 py-4 font-inter text-base text-black placeholder:text-black/25 outline-none transition-all duration-300 focus:border-black"
-              />
-            </div>
-
-            {/* Confirm Password */}
-            <div>
-              <label
-                htmlFor="confirmPassword"
-                className="mb-4 block font-inter text-[11px] uppercase tracking-[0.25em] text-black/50"
-              >
-                Confirmer le mot de passe
-              </label>
-
-              <input
-                type="password"
-                id="confirmPassword"
-                name="confirmPassword"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                placeholder="••••••••"
-                required
-                className="w-full border-0 border-b border-black/20 bg-transparent px-0 py-4 font-inter text-base text-black placeholder:text-black/25 outline-none transition-all duration-300 focus:border-black"
-              />
-            </div>
-
-            {/* Error */}
-            {error && (
-              <div className="border border-red-300 bg-red-50 px-4 py-3">
-                <p className="font-inter text-xs text-red-600">{error}</p>
-              </div>
-            )}
-
-            {/* Success */}
-            {success && (
-              <div className="border border-green-300 bg-green-50 px-4 py-3">
-                <p className="font-inter text-xs text-green-700">{success}</p>
-              </div>
-            )}
-
-            {/* Submit */}
-            <button
-              type="submit"
-              disabled={loading}
-              className="group mt-2 flex w-full items-center justify-center gap-8 bg-black px-8 py-5 font-inter text-[11px] uppercase tracking-[0.3em] text-white transition-all duration-300 hover:bg-black/80 disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              <span>{loading ? "Création..." : "Créer mon compte"}</span>
-
-              {!loading && (
-                <ArrowRight
-                  className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-2"
-                  strokeWidth={1.2}
-                />
-              )}
-            </button>
-          </form>
-
-          {/* Login */}
-          <div className="mt-12 border-t border-black/10 pt-9">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <p className="font-inter text-[11px] uppercase tracking-[0.15em] text-black/40">
-                Vous avez déjà un compte ?
+          <div className="mx-auto w-full max-w-md">
+            {/* Header */}
+            <div className="mb-10">
+              <p className="mb-4 font-inter text-[10px] uppercase tracking-[0.35em] text-[#B49A78]">
+                Nouvel espace
               </p>
 
-              <Link
-                href="/login"
-                className="font-inter text-xs uppercase tracking-[0.2em] text-black underline underline-offset-8 transition-opacity hover:opacity-50"
+              <h2 className="font-playfair text-4xl font-light uppercase leading-tight tracking-[0.04em] text-[#292722] sm:text-5xl">
+                Créer un compte
+              </h2>
+
+              <p className="mt-4 max-w-sm font-inter text-sm leading-7 text-[#292722]/55">
+                Rejoignez ALLURE et créez votre espace personnel.
+              </p>
+            </div>
+
+            {/* Form */}
+            <form onSubmit={handleRegister} className="space-y-6">
+              {/* Name */}
+              <div>
+                <label htmlFor="name" className={labelClass}>
+                  Nom complet
+                </label>
+
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Votre nom"
+                  autoComplete="name"
+                  required
+                  className={inputClass}
+                />
+              </div>
+
+              {/* Email */}
+              <div>
+                <label htmlFor="email" className={labelClass}>
+                  Adresse e-mail
+                </label>
+
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="votre@email.com"
+                  autoComplete="email"
+                  required
+                  className={inputClass}
+                />
+              </div>
+
+              {/* Password */}
+              <div>
+                <label htmlFor="password" className={labelClass}>
+                  Mot de passe
+                </label>
+
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••"
+                  autoComplete="new-password"
+                  minLength={6}
+                  required
+                  className={inputClass}
+                />
+
+                <p className="mt-2 font-inter text-[11px] text-[#292722]/40">
+                  6 caractères minimum
+                </p>
+              </div>
+
+              {/* Confirm password */}
+              <div>
+                <label htmlFor="confirmPassword" className={labelClass}>
+                  Confirmer le mot de passe
+                </label>
+
+                <input
+                  type="password"
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  placeholder="••••••••"
+                  autoComplete="new-password"
+                  minLength={6}
+                  required
+                  className={inputClass}
+                />
+              </div>
+
+              {/* Error */}
+              {error && (
+                <div
+                  role="alert"
+                  className="border border-red-900/15 bg-red-900/[0.04] px-4 py-3"
+                >
+                  <p className="font-inter text-sm leading-6 text-red-700">
+                    {error}
+                  </p>
+                </div>
+              )}
+
+              {/* Success */}
+              {success && (
+                <div
+                  role="status"
+                  className="border border-[#52745B]/20 bg-[#52745B]/[0.06] px-4 py-3"
+                >
+                  <p className="font-inter text-sm leading-6 text-[#52745B]">
+                    {success}
+                  </p>
+                </div>
+              )}
+
+              {/* Submit */}
+              <button
+                type="submit"
+                disabled={loading}
+                className="group mt-3 flex w-full items-center justify-center gap-5 bg-[#292722] px-8 py-[18px] font-inter text-[10px] uppercase tracking-[0.28em] text-white transition-colors duration-300 hover:bg-[#B49A78] disabled:cursor-not-allowed disabled:opacity-50"
               >
-                Se connecter
-              </Link>
+                <span>{loading ? "Création..." : "Créer mon compte"}</span>
+
+                {!loading && (
+                  <ArrowRight
+                    className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5"
+                    strokeWidth={1.4}
+                  />
+                )}
+              </button>
+            </form>
+
+            {/* Login */}
+            <div className="mt-10 border-t border-[#292722]/10 pt-7">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <p className="font-inter text-[10px] uppercase tracking-[0.12em] text-[#292722]/45">
+                  Vous avez déjà un compte ?
+                </p>
+
+                <Link
+                  href="/login"
+                  className="w-fit font-inter text-[10px] uppercase tracking-[0.2em] text-[#292722] underline decoration-[#B49A78] underline-offset-8 transition-opacity hover:opacity-50"
+                >
+                  Se connecter
+                </Link>
+              </div>
             </div>
           </div>
-        </div>
+        </section>
       </div>
     </main>
   );
